@@ -7,5 +7,6 @@ public class User {
 
     @Id
     private String name;
+    private String password;
 
 }
