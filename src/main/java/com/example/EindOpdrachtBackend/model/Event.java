@@ -17,6 +17,8 @@ public class Event {
     private Organizer organizer;
     @OneToMany(mappedBy = "event")
     private List<Review> review;
+    @ManyToMany
+    private List<Visitor> visitorsFavorites;
     @Enumerated(value = EnumType.STRING)
     private EventCategory category;
     private String organizationInfo;
@@ -67,6 +69,14 @@ public class Event {
 
     public void setReview(List<Review> review) {
         this.review = review;
+    }
+
+    public List<Visitor> getVisitorsFavorites() {
+        return visitorsFavorites;
+    }
+
+    public void setVisitorsFavorites(List<Visitor> visitorsFavorites) {
+        this.visitorsFavorites = visitorsFavorites;
     }
 
     public EventCategory getCategory() {

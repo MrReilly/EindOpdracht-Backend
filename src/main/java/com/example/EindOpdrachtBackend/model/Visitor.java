@@ -1,16 +1,14 @@
 package com.example.EindOpdrachtBackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name="visitors")
 public class Visitor extends User{
 
-   @OneToMany(mappedBy = "visitor")
-    private List<FavoriteEvent> myFavoriteEvents;
+   @ManyToMany(cascade = CascadeType.ALL)
+    private List<Event> myFavoriteEvents;
 
     public Visitor() {
     }
@@ -19,11 +17,11 @@ public class Visitor extends User{
         super(userName, password, defaultLocation);
     }
 
-    public List<FavoriteEvent> getMyFavoriteEvents() {
+    public List<Event> getMyFavoriteEvents() {
         return myFavoriteEvents;
     }
 
-    public void setMyFavoriteEvents(List<FavoriteEvent> myFavoriteEvents) {
+    public void setMyFavoriteEvents(List<Event> myFavoriteEvents) {
         this.myFavoriteEvents = myFavoriteEvents;
     }
 }
