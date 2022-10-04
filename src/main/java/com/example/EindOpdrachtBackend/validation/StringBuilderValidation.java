@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-class StringBuilderValidation {
+public class StringBuilderValidation {
 
-    public static StringBuilder stringBuilder = new StringBuilder();
+    public static StringBuilderValidation stringBuilder = new StringBuilderValidation();
 
     public ResponseEntity<Object> validation(BindingResult br) {
 
