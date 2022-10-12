@@ -1,29 +1,41 @@
 package com.example.EindOpdrachtBackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 
 @Entity
+@Table(name="reviews")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Long id;
+    private String authorName;
+    private String reviewText;
+    private Date reviewDate;
+    private Integer starRating;
+
     @ManyToOne
     @JoinColumn(name = "event_id")
+    @JsonIgnore
+    @ToString.Exclude
     private Event event;
+
     @ManyToOne
-    @JoinColumn(name = "visitor_id")
-    private Visitor visitor;
-    private String reviewText;
+    @JoinColumn(name = "author")
+    @JsonIgnore
+    @ToString.Exclude
+    private User author;
 
     @Override
     public boolean equals(Object o) {

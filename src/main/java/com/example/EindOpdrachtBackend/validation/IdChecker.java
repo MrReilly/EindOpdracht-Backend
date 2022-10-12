@@ -2,10 +2,9 @@ package com.example.EindOpdrachtBackend.validation;
 
 import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
 
-
-import java.util.List;
-
+@Component
 public class IdChecker {
 
     public static IdChecker idChecker = new IdChecker();
@@ -20,5 +19,4 @@ public class IdChecker {
             throw new RecordNotFoundException("ID not found");
         }
     }
-
 }

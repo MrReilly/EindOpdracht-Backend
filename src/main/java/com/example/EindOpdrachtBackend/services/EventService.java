@@ -4,66 +4,91 @@ import com.example.EindOpdrachtBackend.dtos.EventGetDto;
 import com.example.EindOpdrachtBackend.dtos.EventPostDto;
 import com.example.EindOpdrachtBackend.mappers.EventMapper;
 import com.example.EindOpdrachtBackend.models.Event;
-import com.example.EindOpdrachtBackend.repositories.EventRepository;
+import com.example.EindOpdrachtBackend.controllers.repositories.EventRepository;
+import com.example.EindOpdrachtBackend.models.User;
+import com.example.EindOpdrachtBackend.validation.IdChecker;
+import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.EindOpdrachtBackend.validation.IdChecker.idChecker;
+//----------------------------------------------------------------------------------------------------------------------
 
 @Service
 public class EventService {
 
     private final EventRepository repos;
     private final EventMapper mapper;
+    private final UserAuthenticator currentUser;
+    private final IdChecker idChecker;
 
-    public EventService(EventRepository repos, EventMapper mapper) {
+    public EventService(@Qualifier("events") EventRepository repos, EventMapper mapper, UserAuthenticator currentUser, IdChecker idChecker) {
 
         this.repos = repos;
         this.mapper = mapper;
-
+        this.currentUser = currentUser;
+        this.idChecker = idChecker;
     }
 
-
-    public List<Event> getAllEvents(){
+//----------------------------------------------------------------------------------------------------------------------
+    public List<Event> getAllEvents() {
 
         return (List<Event>) repos.findAll();
     }
 
-    public Long createEvent(EventPostDto dto) {
+//----------------------------------------------------------------------------------------------------------------------
+    public Event createEvent(EventPostDto dto) {
 
         Event newEvent = mapper.toEntity(dto);
+        User user = currentUser.authenticateUser();
+
+        newEvent.setOrganizer(user);
+
+        newEvent.setOrganizationName(user.getUsername());
 
         repos.save(newEvent);
 
-        return newEvent.getId();
+        return newEvent;
     }
 
-    public EventGetDto getEvent (Long id){
+//----------------------------------------------------------------------------------------------------------------------
+    public Object getEvent(Long id) {
 
-        Event toGet = (Event) idChecker.checkID(id, repos);
-
-        return mapper.toDto(toGet);
+        return mapper.toDto((Event)idChecker.checkID(id, repos));
     }
 
-    public EventGetDto updateEvent(EventPostDto dto, Long id) {
+//----------------------------------------------------------------------------------------------------------------------
+    public Object updateEvent(EventPostDto dto, Long id) {
 
-        Event toUpdate = (Event) idChecker.checkID(id, repos);
+        User user = currentUser.authenticateUser();
+        Event event = (Event) idChecker.checkID(id, repos);
 
-        Event updated = mapper.updateEntity(dto, toUpdate);
+        if (user.equals(event.getOrganizer())) {
 
-        Event saved = this.repos.save(updated);
+            Event updated = mapper.updateEntity(dto, event);
 
-        return mapper.toDto(saved);
+            Event saved = this.repos.save(updated);
+
+            return "Event with ID: " + saved.getId() + " was updated successfully!";
+        }
+
+        return "Event not updated";
     }
 
-    public Long deleteEvent(Long id) {
+//----------------------------------------------------------------------------------------------------------------------
+    public Object deleteEvent(Long id) {
 
-        Event toDelete = (Event) idChecker.checkID(id, repos);
+        User user = currentUser.authenticateUser();
+        Event event = (Event) idChecker.checkID(id, repos);
 
-        this.repos.deleteById(toDelete.getId());
+        if (user.equals(event.getOrganizer())) {
 
-        return id;
+            this.repos.deleteById(event.getId());
+
+            return "Event with ID: " + id + " was deleted successfully!";
+        }
+
+        return "Event was not deleted";
     }
-
 }

@@ -1,12 +1,11 @@
 package com.example.EindOpdrachtBackend.controllers;
 
 import com.example.EindOpdrachtBackend.dtos.EventPostDto;
+import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.services.EventService;
+import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,19 +13,22 @@ import javax.validation.Valid;
 
 import static com.example.EindOpdrachtBackend.validation.StringBuilderValidation.stringBuilder;
 
+
 @RestController
 public class EventController {
 
     private final EventService service;
+    private final UserAuthenticator currentUser;
 
 
-    EventController(EventService service) {
+    EventController(EventService service, UserAuthenticator currentUser) {
         this.service = service;
+        this.currentUser = currentUser;
 
     }
 
     @PostMapping("/event")
-    public ResponseEntity<Object> createEvent(@RequestBody EventPostDto dto, BindingResult br) {
+    public ResponseEntity<Object> createEvent(@Valid @RequestBody EventPostDto dto, BindingResult br) {
 
         if (br.hasErrors()) {
 
@@ -34,29 +36,23 @@ public class EventController {
 
         } else {
 
-            Long createdEventId = service.createEvent(dto);
+            Event newEvent = service.createEvent(dto);
 
-            return new ResponseEntity<>("Event with ID number " + createdEventId + " was created successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("Event " + newEvent.getName() + " with ID number " + newEvent.getId() + " was created successfully", HttpStatus.CREATED);
         }
     }
 
-    @GetMapping("/events")
+    @GetMapping("/event/All")
     public ResponseEntity<Object> getAllEvent() {
-        return new ResponseEntity(service.getAllEvents(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAllEvents(), HttpStatus.OK);
     }
-
 
     @GetMapping("/event/{id}")
     public ResponseEntity<Object> getEvent(@PathVariable Long id) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() instanceof UserDetails) {
-            return new ResponseEntity<>("Hello " + ((UserDetails) auth.getPrincipal()).getUsername() + "We found event with ID: " + service.getEvent(id).getId(), HttpStatus.FOUND);
+            return new ResponseEntity<>( service.getEvent(id), HttpStatus.FOUND);
         }
 
-        return new ResponseEntity<>(" Hello Stranger, we found Event with ID: " + service.getEvent(id), HttpStatus.OK);
-
-    }
 
     @PutMapping("/event/{id}")
     public ResponseEntity<Object> updateEvent(@PathVariable Long id, @Valid @RequestBody EventPostDto dto, BindingResult br) {
@@ -67,14 +63,13 @@ public class EventController {
 
         } else {
 
-            return new ResponseEntity<>("Event with ID number " + service.updateEvent(dto, id).getId() + " was updated successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>(service.updateEvent(dto, id), HttpStatus.CREATED);
         }
     }
-
 
     @DeleteMapping("/event/{id}")
     public ResponseEntity<Object> deleteEvent(@PathVariable Long id) {
 
-        return new ResponseEntity<>("Event with ID number" + service.deleteEvent(id) + " was deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>( service.deleteEvent(id) , HttpStatus.OK);
     }
 }

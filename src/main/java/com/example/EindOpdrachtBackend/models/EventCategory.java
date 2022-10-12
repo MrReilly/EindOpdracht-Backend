@@ -1,6 +1,11 @@
 package com.example.EindOpdrachtBackend.models;
 
-public enum EventCategory {
+import java.io.Serializable;
 
-   festival, art, concert, kids, carnival, nature, market, theater, conference, circus, sport, other;
+public enum EventCategory implements Serializable {
+
+   FESTIVAL, ART, CONCERT, KIDS, FAIR, NATURE, MARKET, THEATER, CONFERENCE, CIRCUS, SPORTS, OTHER;
 }
+
+
+

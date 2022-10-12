@@ -1,25 +1,23 @@
 package com.example.EindOpdrachtBackend.dtos;
 
 import com.example.EindOpdrachtBackend.models.EventCategory;
-import com.example.EindOpdrachtBackend.models.Organizer;
+import com.example.EindOpdrachtBackend.validation.ValueOfCategoryEnum;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 
 import java.util.Date;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class EventPostDto {
 
-    private Organizer organizer;
-
-    @Enumerated(value = EnumType.STRING)
-    private EventCategory category;
     @NotNull
-    private String organizationInfo;
+    @ValueOfCategoryEnum(enumClass = EventCategory.class)
+    private String category;
     @NotNull
     private String name;
     @NotNull
@@ -27,12 +25,21 @@ public class EventPostDto {
     @NotNull
     private String address;
     @NotNull
+    private Double latCoordinate;
+    @NotNull
+    private Double longCoordinate;
+    @NotNull
     private String entryPrice;
     @NotNull
     private String textDescription;
     @NotNull
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @FutureOrPresent
     private Date startDate;
     @NotNull
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @Future
     private Date endDate;
+
 
 }

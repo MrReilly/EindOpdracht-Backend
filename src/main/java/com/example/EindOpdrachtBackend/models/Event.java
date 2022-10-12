@@ -1,41 +1,31 @@
 package com.example.EindOpdrachtBackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 
 @Entity
 @Table(name="events")
 public class Event {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "organizer_id")
-    private Organizer organizer;
 
-    @OneToMany(mappedBy = "event")
-    @ToString.Exclude
-    private List<Review> reviews = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "myFavoriteEvents")
-    @ToString.Exclude
-    private List<Visitor> userFavorites = new ArrayList<>();
-
+    @Column(name="category")
     @Enumerated(value = EnumType.STRING)
     private EventCategory category;
 
-    private String organizationInfo;
+    private String organizationName;
     private String name;
     private String location;
     private String address;
@@ -45,6 +35,22 @@ public class Event {
     private String textDescription;
     private Date startDate;
     private Date endDate;
+    private Integer starRating;
+    @ManyToOne
+    @JoinColumn(name = "organizer")
+    private User organizer;
+
+    @OneToMany(
+            mappedBy = "event",
+            cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Review> reviews = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "myFavoriteEvents")
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Collection<User> userFavorites = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -58,5 +64,7 @@ public class Event {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
 }
 

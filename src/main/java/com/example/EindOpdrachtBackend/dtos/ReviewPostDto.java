@@ -1,21 +1,25 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-import com.example.EindOpdrachtBackend.models.Event;
-import com.example.EindOpdrachtBackend.models.Visitor;
+import com.example.EindOpdrachtBackend.validation.ValueOfCategoryEnum;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+import java.util.Date;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class ReviewPostDto {
 
-        @NotNull
-        private Event event;
-        @NotNull
-        private Visitor visitor;
-        @NotNull
-        private String reviewText;
+    @NotNull
+    @Size(max = 150)
+    private String reviewText;
+    @NotNull
+    @FutureOrPresent
+    private Date reviewDate;
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 5)
+    private Integer starRating;
+
     }
 

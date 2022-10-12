@@ -1,7 +1,7 @@
 package com.example.EindOpdrachtBackend.dtos;
 
+
 import com.example.EindOpdrachtBackend.models.EventCategory;
-import com.example.EindOpdrachtBackend.models.Organizer;
 import com.example.EindOpdrachtBackend.models.Review;
 import lombok.*;
 
@@ -11,19 +11,14 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class EventGetDto {
 
     private Long id;
 
-    private Organizer organizer;
-
-    private List<Review> reviews;
-
     @Enumerated(value = EnumType.STRING)
     private EventCategory category;
 
-    private String organizationInfo;
+    private String organizationName;
     private String name;
     private String location;
     private String address;
@@ -33,5 +28,7 @@ public class EventGetDto {
     private String textDescription;
     private Date startDate;
     private Date endDate;
+    private Integer starRating;
 
+    private List<Review> reviews;
 }
