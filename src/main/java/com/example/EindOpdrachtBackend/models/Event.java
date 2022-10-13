@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.LazyCollection;
@@ -20,11 +19,10 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name="category")
+    @ManyToOne
+    @JoinColumn(name="category")
     @Enumerated(value = EnumType.STRING)
-    private EventCategory category;
-
+    private Category category;
     private String organizationName;
     private String name;
     private String location;
@@ -50,7 +48,7 @@ public class Event {
     @ManyToMany(mappedBy = "myFavoriteEvents")
     @ToString.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<User> userFavorites = new ArrayList<>();
+    private Collection<User> visitor = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

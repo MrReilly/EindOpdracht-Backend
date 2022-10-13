@@ -1,6 +1,6 @@
 package com.example.EindOpdrachtBackend.services;
 
-import com.example.EindOpdrachtBackend.controllers.repositories.EventRepository;
+import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.dtos.UserDetailsUpdateDto;
 import com.example.EindOpdrachtBackend.dtos.UserGetDto;
 import com.example.EindOpdrachtBackend.dtos.UserPostDto;
@@ -8,8 +8,8 @@ import com.example.EindOpdrachtBackend.mappers.UserMapper;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.models.Role;
 import com.example.EindOpdrachtBackend.models.User;
-import com.example.EindOpdrachtBackend.controllers.repositories.RoleRepository;
-import com.example.EindOpdrachtBackend.controllers.repositories.UserRepository;
+import com.example.EindOpdrachtBackend.repositories.RoleRepository;
+import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.beans.factory.annotation.Qualifier;

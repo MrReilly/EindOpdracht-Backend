@@ -1,6 +1,6 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-import com.example.EindOpdrachtBackend.models.EventCategory;
+import com.example.EindOpdrachtBackend.models.CategoryOption;
 import com.example.EindOpdrachtBackend.validation.ValueOfCategoryEnum;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +16,7 @@ import java.util.Date;
 public class EventPostDto {
 
     @NotNull
-    @ValueOfCategoryEnum(enumClass = EventCategory.class)
+    @ValueOfCategoryEnum(enumClass = CategoryOption.class)
     private String category;
     @NotNull
     private String name;

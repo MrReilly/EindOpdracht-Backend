@@ -18,12 +18,10 @@ import static com.example.EindOpdrachtBackend.validation.StringBuilderValidation
 public class EventController {
 
     private final EventService service;
-    private final UserAuthenticator currentUser;
 
 
-    EventController(EventService service, UserAuthenticator currentUser) {
+    EventController(EventService service) {
         this.service = service;
-        this.currentUser = currentUser;
 
     }
 

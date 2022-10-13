@@ -1,6 +1,6 @@
 package com.example.EindOpdrachtBackend.security;
 
-import com.example.EindOpdrachtBackend.controllers.repositories.UserRepository;
+import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .antMatchers("/user/myFavorites").hasAnyAuthority("VISITOR")
                 .antMatchers("/user/myEvents/**").hasAnyAuthority("ORGANIZER")
                 .antMatchers("/user/myEvents").hasAnyAuthority("ORGANIZER")
+                .antMatchers("/category/**").hasAnyAuthority("VISITOR", "ORGANIZER")
                 .antMatchers("/**").hasAnyAuthority("ORGANIZER", "VISITOR")
                 .and()
                 .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)

@@ -1,4 +1,4 @@
-package com.example.EindOpdrachtBackend.controllers.repositories;
+package com.example.EindOpdrachtBackend.repositories;
 
 import com.example.EindOpdrachtBackend.models.User;
 import org.springframework.beans.factory.annotation.Qualifier;

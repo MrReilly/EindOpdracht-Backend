@@ -1,21 +1,19 @@
 package com.example.EindOpdrachtBackend.services;
 
-import com.example.EindOpdrachtBackend.controllers.repositories.EventRepository;
-import com.example.EindOpdrachtBackend.controllers.repositories.UserRepository;
+import com.example.EindOpdrachtBackend.repositories.EventRepository;
+import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.dtos.ReviewGetDto;
 import com.example.EindOpdrachtBackend.dtos.ReviewPostDto;
 import com.example.EindOpdrachtBackend.mappers.ReviewMapper;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.models.Review;
-import com.example.EindOpdrachtBackend.controllers.repositories.ReviewRepository;
+import com.example.EindOpdrachtBackend.repositories.ReviewRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.PreRemove;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 

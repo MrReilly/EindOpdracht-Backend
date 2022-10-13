@@ -1,7 +1,7 @@
 package com.example.EindOpdrachtBackend.security;
 
 import com.example.EindOpdrachtBackend.models.User;
-import com.example.EindOpdrachtBackend.controllers.repositories.UserRepository;
+import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
