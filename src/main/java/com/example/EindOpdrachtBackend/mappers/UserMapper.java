@@ -15,7 +15,6 @@ import java.util.List;
 
 @Component
 public class UserMapper {
-
         private final ModelMapper mapper;
         private final EventService eventService;
 

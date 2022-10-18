@@ -11,11 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//----------------------------------------------------------------------------------------------------------------------
-
 @Service
 public class EventService {
-
     private final EventRepository repos;
     private final EventMapper mapper;
     private final AuthService currentUser;
@@ -29,13 +26,11 @@ public class EventService {
         this.idChecker = idChecker;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
     public List<Event> getAllEvents() {
 
         return (List<Event>) repos.findAll();
     }
 
-//----------------------------------------------------------------------------------------------------------------------
     public Event createEvent(EventPostDto dto) {
 
         Event newEvent = mapper.toEntity(dto);
@@ -50,13 +45,11 @@ public class EventService {
         return newEvent;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
     public Object getEvent(Long id) {
 
         return mapper.toDto((Event)idChecker.checkID(id, repos));
     }
 
-//----------------------------------------------------------------------------------------------------------------------
     public String updateEvent(EventPostDto dto, Long id) {
 
         User user = currentUser.authenticateUser();
@@ -74,7 +67,6 @@ public class EventService {
             return "Event not updated";
     }
 
-//----------------------------------------------------------------------------------------------------------------------
     public String deleteEvent(Long id) {
 
         User user = currentUser.authenticateUser();

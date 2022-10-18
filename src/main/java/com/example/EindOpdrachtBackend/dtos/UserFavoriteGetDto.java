@@ -11,9 +11,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 public class UserFavoriteGetDto {
-
     private List<Object> myFavoriteEvents;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -21,7 +19,6 @@ public class UserFavoriteGetDto {
         UserFavoriteGetDto that = (UserFavoriteGetDto) o;
         return Objects.equals(myFavoriteEvents, that.myFavoriteEvents);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(myFavoriteEvents);

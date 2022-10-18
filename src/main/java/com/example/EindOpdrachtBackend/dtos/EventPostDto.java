@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.Objects;
@@ -23,18 +24,25 @@ public class EventPostDto {
     @ValueOfCategoryEnum(enumClass = CategoryOption.class)
     private String category;
     @NotNull
+    @Size(max = 50)
     private String name;
     @NotNull
+    @Size(max = 50)
     private String location;
     @NotNull
+    @Size(max = 50)
     private String address;
     @NotNull
+    @Size(max = 10)
     private Double latCoordinate;
     @NotNull
+    @Size(max = 10)
     private Double longCoordinate;
     @NotNull
+    @Size(max = 20)
     private String entryPrice;
     @NotNull
+    @Size(max = 150)
     private String textDescription;
     @NotNull
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)

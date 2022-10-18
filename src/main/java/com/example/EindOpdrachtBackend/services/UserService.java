@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//------------------------------------------------------------------------------------------------------------------
-
 @Service
 public class UserService {
 
@@ -45,13 +43,11 @@ public class UserService {
 
     List<Role> userRoles = new ArrayList<>();
 
-    //------------------------------------------------------------------------------------------------------------------
     public List<User> getAllUsers() {
 
         return (List<User>) userRepos.findAll();
     }
 
-    //------------------------------------------------------------------------------------------------------------------
     public User createUser(UserPostDto dto) {
 
         User newUser = new User();
@@ -74,22 +70,19 @@ public class UserService {
         return newUser;
     }
 
-//------------------------------------------------------------------------------------------------------------------
     public UserGetDto getUser(){
 
         User user = currentUser.authenticateUser();
 
         return mapper.mapUser(user);
-
     }
-//------------------------------------------------------------------------------------------------------------------
+
     public Object getUserProfile() {
 
         User user = currentUser.authenticateUser();
 
             return mapper.mapUserProfile(user);
         }
-//------------------------------------------------------------------------------------------------------------------
 
     public Object getMyFavoriteEvents() {
 
@@ -98,7 +91,6 @@ public class UserService {
         return mapper.mapMyFavorites(user);
     }
 
-//------------------------------------------------------------------------------------------------------------------
     public Object getMyEvents() {
 
         User user = currentUser.authenticateUser();
@@ -106,7 +98,6 @@ public class UserService {
         return mapper.mapMyEvents(user);
     }
 
-//------------------------------------------------------------------------------------------------------------------
     public String updateUser(UserDetailsUpdateDto dto) {
 
         User user = currentUser.authenticateUser();
@@ -126,7 +117,6 @@ public class UserService {
                 return saved.getUsername();
             }
 
-//------------------------------------------------------------------------------------------------------------------
     public String saveFavoriteEvent (Long eventId) {
 
         User user = currentUser.authenticateUser();
@@ -147,9 +137,8 @@ public class UserService {
         }
 
             return "This event is already in your favorite list!";
-
     }
-//------------------------------------------------------------------------------------------------------------------
+
     public String deleteUser() {
 
         User user = currentUser.authenticateUser();
@@ -158,7 +147,6 @@ public class UserService {
 
                 return user.getUsername();
     }
-//------------------------------------------------------------------------------------------------------------------
 
     public Long removeFavorite(Long id){
 

@@ -14,11 +14,8 @@ import javax.validation.constraints.NotNull;
 public class UserDetailsUpdateDto {
 
     private String[] roles;
-
     private String username;
-
     private String defaultLocation;
-
     private String organizationName;
 
 }

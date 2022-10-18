@@ -7,13 +7,10 @@ import com.example.EindOpdrachtBackend.models.*;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.security.JwtService;
 import com.example.EindOpdrachtBackend.util.DateConverter;
-import com.example.EindOpdrachtBackend.util.ResponseToController;
-import com.example.EindOpdrachtBackend.util.Tester;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

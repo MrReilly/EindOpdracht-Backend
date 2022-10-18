@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-
 import com.example.EindOpdrachtBackend.models.Category;
 import com.example.EindOpdrachtBackend.models.Review;
 import lombok.*;
@@ -18,10 +17,8 @@ import java.util.Objects;
 public class EventGetDto {
 
     private Long id;
-
     @Enumerated(value = EnumType.STRING)
     private Category category;
-
     private String organizationName;
     private String name;
     private String location;

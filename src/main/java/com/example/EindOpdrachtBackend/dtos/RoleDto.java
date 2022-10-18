@@ -2,8 +2,6 @@ package com.example.EindOpdrachtBackend.dtos;
 
 import lombok.*;
 
-import java.util.Objects;
-
 @Setter
 @Getter
 @AllArgsConstructor
@@ -12,6 +10,5 @@ import java.util.Objects;
 public class RoleDto {
 
     private String rolename;
-
 
 }

@@ -16,11 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
-//---------------------------------------------------------------------------------------------------------
 @Service
 public class ReviewService {
-
     private final ReviewRepository reviewRepos;
     private final EventRepository eventRepos;
     private final UserRepository userRepos;
@@ -28,7 +25,8 @@ public class ReviewService {
     private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public ReviewService(@Qualifier("reviews") ReviewRepository reviewRepos, EventRepository eventRepos, UserRepository userRepos, ReviewMapper mapper, AuthService currentUser, IdChecker idChecker) {
+    public ReviewService(@Qualifier("reviews")
+                         ReviewRepository reviewRepos, EventRepository eventRepos, UserRepository userRepos, ReviewMapper mapper, AuthService currentUser, IdChecker idChecker) {
 
         this.reviewRepos = reviewRepos;
         this.eventRepos = eventRepos;
@@ -36,16 +34,13 @@ public class ReviewService {
         this.mapper = mapper;
         this.currentUser = currentUser;
         this.idChecker = idChecker;
-
     }
 
-    //---------------------------------------------------------------------------------------------------------
     public List<Review> getAllReviews() {
 
         return (List<Review>) reviewRepos.findAll();
     }
 
-    //---------------------------------------------------------------------------------------------------------
     public Review createReview(ReviewPostDto dto, Long eventId) {
 
         Review newReview = mapper.toEntity(dto);
@@ -63,15 +58,12 @@ public class ReviewService {
             return newReview;
         }
 
-
-    //---------------------------------------------------------------------------------------------------------
     public ReviewGetDto getReview(Long id) {
 
         Review toGet = (Review) idChecker.checkID(id, reviewRepos);
 
         return mapper.toDto(toGet);
     }
-    //---------------------------------------------------------------------------------------------------------
 
     public Object deleteReview(Long id) {
 
@@ -105,6 +97,7 @@ public class ReviewService {
 
             return id;
         }
+
         return "The review was not deleted";
     }
     }

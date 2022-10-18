@@ -40,7 +40,7 @@ public class AuthController {
                     .body("Token generated");
         }
         catch (AuthenticationException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 }

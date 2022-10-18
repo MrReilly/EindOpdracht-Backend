@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-import com.example.EindOpdrachtBackend.models.Event;
 import lombok.*;
 
 import java.util.List;
@@ -14,8 +13,7 @@ import java.util.Objects;
 @ToString
 public class CategoryGetDto {
 
-    List<EventGetDto> events;
-
+    private List<EventGetDto> events;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -23,7 +21,6 @@ public class CategoryGetDto {
         CategoryGetDto that = (CategoryGetDto) o;
         return Objects.equals(events, that.events);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(events);

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ReviewMapper {
-
     private final ModelMapper mapper;
 
     public ReviewMapper(ModelMapper mapper) {
@@ -22,7 +21,6 @@ public class ReviewMapper {
        mapped.setEventId( review.getEvent().getId());
 
        return mapped;
-
     }
 
     public Review toEntity(ReviewPostDto dto) {

@@ -13,7 +13,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 public class ReviewGetDto {
-
     private Long id;
     private Long eventId;
     private String authorName;
