@@ -11,7 +11,6 @@ import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.repositories.RoleRepository;
 import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
-import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,10 +29,10 @@ public class UserService {
     private final UserMapper mapper;
     private final PasswordEncoder encoder;
     private final EventRepository eventRepos;
-    private final UserAuthenticator currentUser;
+    private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public UserService(@Qualifier("users") UserRepository userRepos, UserMapper mapper, @Qualifier("roles") RoleRepository roleRepos, PasswordEncoder encoder, EventRepository eventRepos, UserAuthenticator currentUser, IdChecker idChecker) {
+    public UserService(@Qualifier("users") UserRepository userRepos, UserMapper mapper, @Qualifier("roles") RoleRepository roleRepos, PasswordEncoder encoder, EventRepository eventRepos, AuthService currentUser, IdChecker idChecker) {
 
         this.roleRepos = roleRepos;
         this.userRepos = userRepos;
@@ -53,7 +52,7 @@ public class UserService {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    public String createUser(UserPostDto dto) {
+    public User createUser(UserPostDto dto) {
 
         User newUser = new User();
 
@@ -72,7 +71,7 @@ public class UserService {
 
         userRepos.save(newUser);
 
-        return newUser.getUsername();
+        return newUser;
     }
 
 //------------------------------------------------------------------------------------------------------------------

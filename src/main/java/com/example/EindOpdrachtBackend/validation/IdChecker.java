@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class IdChecker {
 
-    public static IdChecker idChecker = new IdChecker();
-
     public Object checkID(Long id, CrudRepository<?,Long> repos) {
 
         if (repos.findById(id).isPresent()){

@@ -5,9 +5,13 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class ReviewPostDto {
 
     @NotNull
@@ -21,5 +25,17 @@ public class ReviewPostDto {
     @Max(value = 5)
     private Integer starRating;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ReviewPostDto)) return false;
+        ReviewPostDto that = (ReviewPostDto) o;
+        return Objects.equals(reviewText, that.reviewText) && Objects.equals(reviewDate, that.reviewDate) && Objects.equals(starRating, that.starRating);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reviewText, reviewDate, starRating);
+    }
+}
 

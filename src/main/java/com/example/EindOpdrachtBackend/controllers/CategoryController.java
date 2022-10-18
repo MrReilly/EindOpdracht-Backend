@@ -18,7 +18,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<Object> getEvent(@PathVariable CategoryOption category) {
+    public ResponseEntity<Object> getCategory(@PathVariable CategoryOption category) {
 
         return new ResponseEntity<>( service.getCategory(category), HttpStatus.FOUND);
     }

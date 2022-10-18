@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE,"/review/**").hasAnyAuthority("VISITOR")
                 .antMatchers(HttpMethod.POST, "/event").hasAnyAuthority("ORGANIZER")
                 .antMatchers(HttpMethod.PUT, "/event/**").hasAnyAuthority("ORGANIZER")
+                .antMatchers(HttpMethod.GET,"/event/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/event/**").hasAnyAuthority("ORGANIZER")
                 .antMatchers("/user/myFavorites/**").hasAnyAuthority("VISITOR")
                 .antMatchers("/user/myFavorites").hasAnyAuthority("VISITOR")

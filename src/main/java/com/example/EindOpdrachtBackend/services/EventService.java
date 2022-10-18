@@ -6,7 +6,6 @@ import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
-import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +18,10 @@ public class EventService {
 
     private final EventRepository repos;
     private final EventMapper mapper;
-    private final UserAuthenticator currentUser;
+    private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public EventService(@Qualifier("events") EventRepository repos, EventMapper mapper, UserAuthenticator currentUser, IdChecker idChecker) {
+    public EventService(@Qualifier("events") EventRepository repos, EventMapper mapper, AuthService currentUser, IdChecker idChecker) {
 
         this.repos = repos;
         this.mapper = mapper;
@@ -44,7 +43,7 @@ public class EventService {
 
         newEvent.setOrganizer(user);
 
-        newEvent.setOrganizationName(user.getUsername());
+        newEvent.setOrganizationName(user.getOrganizationName());
 
         repos.save(newEvent);
 
@@ -58,7 +57,7 @@ public class EventService {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-    public Object updateEvent(EventPostDto dto, Long id) {
+    public String updateEvent(EventPostDto dto, Long id) {
 
         User user = currentUser.authenticateUser();
         Event event = (Event) idChecker.checkID(id, repos);
@@ -67,16 +66,16 @@ public class EventService {
 
             Event updated = mapper.updateEntity(dto, event);
 
-            Event saved = this.repos.save(updated);
+            this.repos.save(updated);
 
-            return "Event with ID: " + saved.getId() + " was updated successfully!";
+            return "The event was updated successfully!";
         }
 
-        return "Event not updated";
+            return "Event not updated";
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-    public Object deleteEvent(Long id) {
+    public String deleteEvent(Long id) {
 
         User user = currentUser.authenticateUser();
         Event event = (Event) idChecker.checkID(id, repos);
@@ -85,7 +84,7 @@ public class EventService {
 
             this.repos.deleteById(event.getId());
 
-            return "Event with ID: " + id + " was deleted successfully!";
+            return "The event was deleted successfully!";
         }
 
         return "Event was not deleted";

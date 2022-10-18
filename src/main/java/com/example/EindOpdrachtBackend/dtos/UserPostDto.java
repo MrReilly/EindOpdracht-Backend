@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserPostDto {
         @NotNull
         private String[] roles;

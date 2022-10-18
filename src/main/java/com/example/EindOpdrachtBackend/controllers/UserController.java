@@ -30,7 +30,7 @@ public class UserController {
 
         } else {
 
-            String createdUserName = service.createUser(dto);
+            String createdUserName = service.createUser(dto).getUsername();
 
             return new ResponseEntity<>( createdUserName + " was created successfully", HttpStatus.CREATED);
         }

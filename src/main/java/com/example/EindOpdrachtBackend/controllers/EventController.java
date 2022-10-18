@@ -3,7 +3,6 @@ package com.example.EindOpdrachtBackend.controllers;
 import com.example.EindOpdrachtBackend.dtos.EventPostDto;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.services.EventService;
-import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -36,7 +35,7 @@ public class EventController {
 
             Event newEvent = service.createEvent(dto);
 
-            return new ResponseEntity<>("Event " + newEvent.getName() + " with ID number " + newEvent.getId() + " was created successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("Event created successfully with ID " + newEvent.getId(), HttpStatus.CREATED);
         }
     }
 

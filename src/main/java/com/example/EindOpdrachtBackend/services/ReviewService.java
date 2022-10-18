@@ -10,7 +10,6 @@ import com.example.EindOpdrachtBackend.models.Review;
 import com.example.EindOpdrachtBackend.repositories.ReviewRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
-import com.example.EindOpdrachtBackend.validation.UserAuthenticator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +25,10 @@ public class ReviewService {
     private final EventRepository eventRepos;
     private final UserRepository userRepos;
     private final ReviewMapper mapper;
-    private final UserAuthenticator currentUser;
+    private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public ReviewService(@Qualifier("reviews") ReviewRepository reviewRepos, EventRepository eventRepos,UserRepository userRepos, ReviewMapper mapper, UserAuthenticator currentUser, IdChecker idChecker) {
+    public ReviewService(@Qualifier("reviews") ReviewRepository reviewRepos, EventRepository eventRepos, UserRepository userRepos, ReviewMapper mapper, AuthService currentUser, IdChecker idChecker) {
 
         this.reviewRepos = reviewRepos;
         this.eventRepos = eventRepos;
@@ -47,28 +46,23 @@ public class ReviewService {
     }
 
     //---------------------------------------------------------------------------------------------------------
-    public Object createReview(ReviewPostDto dto, Long eventId) {
+    public Review createReview(ReviewPostDto dto, Long eventId) {
 
         Review newReview = mapper.toEntity(dto);
         User user = currentUser.authenticateUser();
 
 
-        Optional<Event> reviewedEvent = eventRepos.findById(eventId);
+        Event reviewedEvent = (Event)idChecker.checkID(eventId, eventRepos);
 
-        if (reviewedEvent.isPresent()) {
-            Event event = reviewedEvent.get();
-
-            newReview.setEvent(event);
+            newReview.setEvent(reviewedEvent);
             newReview.setAuthor(user);
             newReview.setAuthorName(user.getUsername());
 
             reviewRepos.save(newReview);
 
-            return newReview.getId();
+            return newReview;
         }
 
-        return "Event was not saved";
-    }
 
     //---------------------------------------------------------------------------------------------------------
     public ReviewGetDto getReview(Long id) {

@@ -8,9 +8,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class EventGetDto {
 
     private Long id;
@@ -31,4 +35,17 @@ public class EventGetDto {
     private Integer starRating;
 
     private List<Review> reviews;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EventGetDto)) return false;
+        EventGetDto that = (EventGetDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(category, that.category) && Objects.equals(organizationName, that.organizationName) && Objects.equals(name, that.name) && Objects.equals(location, that.location) && Objects.equals(address, that.address) && Objects.equals(latCoordinate, that.latCoordinate) && Objects.equals(longCoordinate, that.longCoordinate) && Objects.equals(entryPrice, that.entryPrice) && Objects.equals(textDescription, that.textDescription) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(starRating, that.starRating) && Objects.equals(reviews, that.reviews);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, category, organizationName, name, location, address, latCoordinate, longCoordinate, entryPrice, textDescription, startDate, endDate, starRating, reviews);
+    }
 }

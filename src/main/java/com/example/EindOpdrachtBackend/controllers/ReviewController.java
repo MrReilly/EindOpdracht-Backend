@@ -1,6 +1,7 @@
 package com.example.EindOpdrachtBackend.controllers;
 
 import com.example.EindOpdrachtBackend.dtos.ReviewPostDto;
+import com.example.EindOpdrachtBackend.models.Review;
 import com.example.EindOpdrachtBackend.services.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,9 @@ public class ReviewController {
 
         } else {
 
-            Object createdReviewId = service.createReview(dto, eventId);
+            Review createdReview = service.createReview(dto, eventId);
 
-            return new ResponseEntity<>("Review with ID number " + createdReviewId + " was created successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("Review with ID number " + createdReview.getId() + " was created successfully", HttpStatus.CREATED);
         }
     }
 //-------------------------------------------------------------------------------------------------------------

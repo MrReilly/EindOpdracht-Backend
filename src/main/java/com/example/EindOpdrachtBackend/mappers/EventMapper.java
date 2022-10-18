@@ -60,7 +60,8 @@ public class EventMapper {
 //--------------------------------------------------------------------------------------------------------------------
             public Event updateEntity(EventPostDto dto, Event event){
 
-            mapper.map(dto, event);
+                mapper.map(dto, event);
+
             return event;
         }
     }

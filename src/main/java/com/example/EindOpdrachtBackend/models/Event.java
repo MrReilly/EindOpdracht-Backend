@@ -10,6 +10,8 @@ import java.util.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 
 @Entity

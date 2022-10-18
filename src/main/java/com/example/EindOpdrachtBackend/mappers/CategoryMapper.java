@@ -14,7 +14,7 @@ public class CategoryMapper {
 
     EventMapper eventMapper;
 
-    CategoryMapper(EventMapper eventMapper){
+   CategoryMapper(EventMapper eventMapper){
 
         this.eventMapper = eventMapper;
     }
