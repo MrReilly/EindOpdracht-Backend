@@ -7,8 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+
+import java.io.IOException;
 
 import static com.example.EindOpdrachtBackend.validation.StringBuilderValidation.stringBuilder;
 
@@ -25,7 +28,7 @@ public class EventController {
     }
 
     @PostMapping("/event")
-    public ResponseEntity<Object> createEvent(@Valid @RequestBody EventPostDto dto, BindingResult br) {
+    public ResponseEntity<Object> createEvent( @Valid @RequestBody EventPostDto dto, BindingResult br) {
 
         if (br.hasErrors()) {
 
@@ -47,7 +50,7 @@ public class EventController {
     @GetMapping("/event/{id}")
     public ResponseEntity<Object> getEvent(@PathVariable Long id) {
 
-            return new ResponseEntity<>( service.getEvent(id), HttpStatus.FOUND);
+            return new ResponseEntity<>( service.getEvent(id), HttpStatus.OK);
         }
 
 

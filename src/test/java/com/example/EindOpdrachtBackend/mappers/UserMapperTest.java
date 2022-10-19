@@ -1,6 +1,9 @@
 package com.example.EindOpdrachtBackend.mappers;
 
+import com.example.EindOpdrachtBackend.dtos.UserFavoriteGetDto;
 import com.example.EindOpdrachtBackend.dtos.UserGetDto;
+import com.example.EindOpdrachtBackend.dtos.UserMyEventGetDto;
+import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.models.Role;
 import com.example.EindOpdrachtBackend.models.RoleOption;
 import com.example.EindOpdrachtBackend.models.User;
@@ -74,4 +77,40 @@ class UserMapperTest {
 
     }
 
+    @Test
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
+    @DisplayName("Should map myFavorites to myFavoritesDto and return it")
+    void shouldMapMyFavoriteEventsToDtoAndReturnIt() {
+
+        UserMapper userMapper = new UserMapper(modelMapper, eventService);
+
+        List<Role> listRoles = new ArrayList<>();
+        List<Event> favoriteEvents = new ArrayList<>();
+        List<Object> objectFavoriteEvents = new ArrayList<>();
+
+        UserFavoriteGetDto userFavoriteGetDto = new UserFavoriteGetDto(objectFavoriteEvents);
+        User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, favoriteEvents, null, null);
+
+
+        assertEquals(userFavoriteGetDto, userMapper.mapMyFavorites(user));
+
+    }
+
+    @Test
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
+    @DisplayName("Should map myEvents to myEventsDto and return it")
+    void shouldMapMyEventsToDtoAndReturnIt() {
+
+        UserMapper userMapper = new UserMapper(modelMapper, eventService);
+
+        List<Role> listRoles = new ArrayList<>();
+        List<Event> myEvents = new ArrayList<>();
+        List<Object> objectMyEvents = new ArrayList<>();
+
+        UserMyEventGetDto userMyEventGetDto = new UserMyEventGetDto(objectMyEvents);
+        User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, null, null, myEvents);
+
+
+        assertEquals(userMyEventGetDto, userMapper.mapMyEvents(user));
+    }
 }

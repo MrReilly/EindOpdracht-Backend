@@ -36,5 +36,6 @@ public class TesterData {
     UserGetDto userGetDto = new UserGetDto("thomas", "Nijmegen", "ok bv", objectRoles , objectFavoriteEvents, reviewList, objectMyEvents);
     UserMyEventGetDto userMyEventGetDto = new UserMyEventGetDto(objectMyEvents);
     UserPostDto userPostDto = new UserPostDto(rolesStringArray, "thomas", "123", "Nijmegen", "");
+
 }
 */

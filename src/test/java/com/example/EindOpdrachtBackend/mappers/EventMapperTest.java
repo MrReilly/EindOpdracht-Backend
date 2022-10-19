@@ -50,7 +50,7 @@ class EventMapperTest {
         List<Review> censoredlistReviews = new ArrayList<>();
 
         User user = new User("thomas", "123", "Nijmegen", "bv",null, null, null, null);
-        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, fullListReviews, null);
+        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, fullListReviews, null);
 
         Review fullReview = new Review(1L, "thomas", "I liked it!", DateConverter.parseDate("2022-11-30"), 2, event, user);
         fullListReviews.add(fullReview);
@@ -58,7 +58,7 @@ class EventMapperTest {
         Review censoredReview = new Review(1L, "thomas", "I liked it!", DateConverter.parseDate("2022-11-30"), 2, event, null);
         censoredlistReviews.add(censoredReview);
 
-        EventGetDto eventGetDto = new EventGetDto(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, censoredlistReviews);
+        EventGetDto eventGetDto = new EventGetDto(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, censoredlistReviews, null);
 
         Mockito.when(modelMapper.map(event, EventGetDto.class)).thenReturn(eventGetDto);
 
@@ -86,11 +86,11 @@ class EventMapperTest {
 
         Category category = new Category(CategoryOption.FAIR, null);
         EventPostDto eventPostDto = new EventPostDto("FAIR", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"));
-        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null);
+        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null , null, null, null);
 
         Mockito.when(modelMapper.map(eventPostDto, Event.class)).thenReturn(event);
 
-        assertEquals(event, eventMapper.toEntity(eventPostDto));
+        assertEquals(event,eventMapper.toEntity(eventPostDto));
     }
 
 }

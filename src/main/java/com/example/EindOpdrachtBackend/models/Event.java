@@ -36,6 +36,10 @@ public class Event {
     private Date startDate;
     private Date endDate;
     private Integer starRating;
+    @OneToOne(
+            mappedBy = "event",
+            cascade = CascadeType.ALL)
+    private ImageData imageData;
     @ManyToOne
     @JoinColumn(name = "organizer")
     private User organizer;

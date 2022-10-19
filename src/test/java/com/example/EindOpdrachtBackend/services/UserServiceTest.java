@@ -133,7 +133,7 @@ class UserServiceTest {
         UserFavoriteGetDto favoritesDto = new UserFavoriteGetDto();
         User user = new User("jadey", "123", "Nijmegen", "bv",null , null, null, null);
         List<Object> favoriteEvents = new ArrayList<>();
-        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null);
+        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
         favoriteEvents.add(event);
         favoritesDto.setMyFavoriteEvents(favoriteEvents);
 
@@ -153,7 +153,7 @@ class UserServiceTest {
         UserMyEventGetDto myEventsDto = new UserMyEventGetDto();
         User user = new User("jadey", "123", "Nijmegen", "bv",null , null, null, null);
         List<Object> myEventsEvents = new ArrayList<>();
-        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null);
+        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
         myEventsEvents.add(event);
         myEventsDto.setMyEvents(myEventsEvents);
 

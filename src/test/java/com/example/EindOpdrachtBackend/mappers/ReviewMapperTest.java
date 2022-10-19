@@ -37,7 +37,7 @@ class ReviewMapperTest {
 
         Category category = new Category(CategoryOption.FAIR, null);
         ReviewMapper reviewMapper = new ReviewMapper(modelMapper);
-        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null);
+        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
         Review review = new Review(1L, "thomas", "I liked it!", DateConverter.parseDate("2022-11-30"), 2, event, null);
         ReviewGetDto reviewGetDto = new ReviewGetDto(1L, 1L, "thomas", "It was nice!", DateConverter.parseDate("2023-01-02"), 1);
 

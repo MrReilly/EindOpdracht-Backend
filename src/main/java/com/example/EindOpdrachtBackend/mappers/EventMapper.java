@@ -10,7 +10,7 @@ import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-//--------------------------------------------------------------------------------------------------------------------
+
 @Component
 public class EventMapper {
 
@@ -23,6 +23,8 @@ public class EventMapper {
         public EventGetDto toDto(Event event) {
 
            EventGetDto mapped = mapper.map(event, EventGetDto.class);
+
+           mapped.setImageData(null);
 
             List<Review> fullList = event.getReviews();
 
@@ -46,7 +48,10 @@ public class EventMapper {
             }
 
             mapped.setReviews(censoredReviewList);
-            mapped.setStarRating(averageStarRating / mapped.getReviews().size());
+
+            if(mapped.getReviews().size() > 0){
+
+            mapped.setStarRating(averageStarRating / mapped.getReviews().size());}
 
             return mapped;
         }

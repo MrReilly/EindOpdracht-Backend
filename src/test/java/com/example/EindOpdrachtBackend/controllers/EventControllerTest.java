@@ -66,14 +66,14 @@ class EventControllerTest {
     @DisplayName("Should return EventDto")
     void shouldReturnEventDto() throws Exception {
 
-        EventGetDto dto = new EventGetDto(1L, null,  "bv", "Kermis", "Nijmegen", "Burchtstraat", 50.0000, 5.0000,  "5 euro", "gezellige kermis", null, null, 2, null);
+        EventGetDto dto = new EventGetDto(1L, null,  "bv", "Kermis", "Nijmegen", "Burchtstraat", 50.0000, 5.0000,  "5 euro", "gezellige kermis", null, null, 2, null, null);
 
         Mockito.when(eventService.getEvent(1L)).thenReturn(dto);
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/event/1"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.organizationName", is("bv")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", is("Kermis")))

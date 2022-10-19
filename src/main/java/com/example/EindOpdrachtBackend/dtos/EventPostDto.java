@@ -65,5 +65,6 @@ public class EventPostDto {
     public int hashCode() {
         return Objects.hash(category, name, location, address, latCoordinate, longCoordinate, entryPrice, textDescription, startDate, endDate);
     }
+
 }
 

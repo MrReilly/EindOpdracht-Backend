@@ -8,6 +8,7 @@ import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
