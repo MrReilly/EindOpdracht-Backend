@@ -1,32 +1,40 @@
 package com.example.EindOpdrachtBackend.controllers;
 
-import com.example.EindOpdrachtBackend.dtos.UserGetDto;
-import com.example.EindOpdrachtBackend.models.Role;
-import com.example.EindOpdrachtBackend.models.User;
+import com.example.EindOpdrachtBackend.dtos.UserPostDto;
+import com.example.EindOpdrachtBackend.models.*;
+import com.example.EindOpdrachtBackend.repositories.RoleRepository;
 import com.example.EindOpdrachtBackend.security.JwtService;
 import com.example.EindOpdrachtBackend.services.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
 class UserControllerTest {
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     MockMvc mockMvc;
@@ -34,6 +42,15 @@ class UserControllerTest {
     JwtService jwtService;
     @MockBean
     UserService userService;
+
+    @MockBean
+    RoleRepository roleRepos;
+
+    @BeforeEach()
+    void setup() {
+
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
     @Test
     @WithMockUser(username="jadey", roles="ORGANIZER")
@@ -47,7 +64,47 @@ class UserControllerTest {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/users"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", is(users)));
+    }
+
+
+    @Test
+    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @DisplayName("Should create, save and return user")
+    void shouldCreateSaveAndReturnUser() throws  Exception {
+
+        List<Role> listRoles = new ArrayList<>();
+        Role role = new Role(RoleOption.ORGANIZER, null);
+        listRoles.add(role);
+        List<Event> favoriteEvents = new ArrayList<>();
+        List<Review> reviewList = new ArrayList<>();
+        List<Event> myEvents = new ArrayList<>();
+        Collection<User> users = new ArrayList<>();
+
+        User user = new User("jadey", "123", "Nijmegen", "bv",listRoles, favoriteEvents, reviewList, myEvents);
+        users.add(user);
+        role.setUsers(users);
+
+        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "Nijmegen", "");
+
+        Mockito.when(userService.createUser(userPostDto)).thenReturn(user.getUsername());
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.post("/user")
+                .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123", "Nijmegen", "")))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").exists());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

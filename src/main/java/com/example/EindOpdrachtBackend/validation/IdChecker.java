@@ -17,4 +17,16 @@ public class IdChecker {
             throw new RecordNotFoundException("ID not found");
         }
     }
+
+    public Object checkUsername(String id, CrudRepository<?,String> repos) {
+
+        if (repos.findById(id).isPresent()){
+            return repos.findById(id).get();
+        }
+
+        else {
+            throw new RecordNotFoundException("user not found");
+        }
+    }
+
 }

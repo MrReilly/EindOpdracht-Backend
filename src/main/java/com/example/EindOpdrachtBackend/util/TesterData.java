@@ -1,4 +1,4 @@
-package com.example.EindOpdrachtBackend.util;
+/*package com.example.EindOpdrachtBackend.util;
 
 import com.example.EindOpdrachtBackend.dtos.*;
 import com.example.EindOpdrachtBackend.models.*;;
@@ -37,3 +37,4 @@ public class TesterData {
     UserMyEventGetDto userMyEventGetDto = new UserMyEventGetDto(objectMyEvents);
     UserPostDto userPostDto = new UserPostDto(rolesStringArray, "thomas", "123", "Nijmegen", "");
 }
+*/

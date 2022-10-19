@@ -2,6 +2,7 @@ package com.example.EindOpdrachtBackend.mappers;
 
 import com.example.EindOpdrachtBackend.dtos.UserGetDto;
 import com.example.EindOpdrachtBackend.models.Role;
+import com.example.EindOpdrachtBackend.models.RoleOption;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.security.JwtService;
 import com.example.EindOpdrachtBackend.services.EventService;
@@ -41,7 +42,7 @@ class UserMapperTest {
 
         List<Role> listRoles = new ArrayList<>();
         Object[] objectRoles = listRoles.toArray(new Role[0]);
-        Role role = new Role("ORGANIZER", null);
+        Role role = new Role(RoleOption.ORGANIZER, null);
         listRoles.add(role);
 
         User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, null, null, null);
@@ -61,7 +62,7 @@ class UserMapperTest {
 
         List<Role> listRoles = new ArrayList<>();
         Object[] objectRoles = listRoles.toArray(new Role[0]);
-        Role role = new Role("ORGANIZER", null);
+        Role role = new Role(RoleOption.ORGANIZER, null);
         listRoles.add(role);
 
         User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, null, null, null);

@@ -1,5 +1,6 @@
 package com.example.EindOpdrachtBackend.services;
 
+import com.example.EindOpdrachtBackend.models.RoleOption;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.dtos.UserDetailsUpdateDto;
 import com.example.EindOpdrachtBackend.dtos.UserGetDto;
@@ -48,7 +49,7 @@ public class UserService {
         return (List<User>) userRepos.findAll();
     }
 
-    public User createUser(UserPostDto dto) {
+    public String createUser(UserPostDto dto) {
 
         User newUser = new User();
 
@@ -57,17 +58,17 @@ public class UserService {
         newUser.setDefaultLocation(dto.getDefaultLocation());
         newUser.setOrganizationName(dto.getOrganizationName());
 
-        for (String rolename : dto.getRoles()) {
-            Optional<Role> or = roleRepos.findById(rolename);
+        String role = dto.getRole();
+
+            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(role));
 
             or.ifPresent(userRoles::add);
-        }
 
         newUser.setRoles(userRoles);
 
         userRepos.save(newUser);
 
-        return newUser;
+        return newUser.getUsername();
     }
 
     public UserGetDto getUser(){
@@ -105,7 +106,7 @@ public class UserService {
                 User updated = mapper.updateUser(dto, user);
 
         for (String rolename : dto.getRoles()) {
-            Optional<Role> or = roleRepos.findById(rolename);
+            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(rolename));
 
             or.ifPresent(userRoles::add);
         }
@@ -139,13 +140,19 @@ public class UserService {
             return "This event is already in your favorite list!";
     }
 
-    public String deleteUser() {
+    public String deleteUser(String username) {
 
-        User user = currentUser.authenticateUser();
+        User cUser = currentUser.authenticateUser();
 
-                this.userRepos.deleteById(user.getUsername());
+        User toDeleteUser = (User)idChecker.checkUsername(username, userRepos);
 
-                return user.getUsername();
+        if(cUser.equals(toDeleteUser)) {
+
+            this.userRepos.deleteById(cUser.getUsername());
+            return cUser.getUsername();
+        }
+
+        return "you are not allowed to delete this user!";
     }
 
     public Long removeFavorite(Long id){

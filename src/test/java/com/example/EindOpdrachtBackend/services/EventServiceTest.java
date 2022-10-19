@@ -65,7 +65,7 @@ class EventServiceTest {
         Category category = new Category(CategoryOption.FAIR, null);
         Collection<Role> roles = new ArrayList<>();
 
-        Role role = new Role("ORGANIZER", null);
+        Role role = new Role(RoleOption.ORGANIZER, null);
         roles.add(role);
         User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
 
@@ -124,7 +124,7 @@ class EventServiceTest {
         Category category = new Category(CategoryOption.FAIR, null);
         Collection<Role> roles = new ArrayList<>();
 
-        Role role = new Role("ORGANIZER", null);
+        Role role = new Role(RoleOption.ORGANIZER, null);
         roles.add(role);
         User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
 
@@ -165,7 +165,7 @@ class EventServiceTest {
 
         Collection<Role> roles = new ArrayList<>();
 
-        Role role = new Role("ORGANIZER", null);
+        Role role = new Role(RoleOption.ORGANIZER, null);
         roles.add(role);
         User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
 

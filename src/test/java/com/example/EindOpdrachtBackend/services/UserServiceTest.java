@@ -7,6 +7,7 @@ import com.example.EindOpdrachtBackend.dtos.UserPostDto;
 import com.example.EindOpdrachtBackend.mappers.UserMapper;;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.models.Role;
+import com.example.EindOpdrachtBackend.models.RoleOption;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.repositories.RoleRepository;
@@ -73,24 +74,22 @@ class UserServiceTest {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
         List<User> users = new ArrayList<>();
-        String[] rolesStringArray = new String[1];
         List<Role> roles = new ArrayList<>();
-        Role role = new Role("VISITOR", users);
-        Optional<Role> or = roleRepos.findById("VISITOR");
+        Role role = new Role(RoleOption.VISITOR, users);
+        Optional<Role> or = roleRepos.findById(RoleOption.VISITOR);
         roles.add(role);
-        rolesStringArray[0] = "VISITOR";
 
         User user = new User("jadey", "123", "Nijmegen", "bv",roles, null, null, null);
         users.add(user);
-        UserPostDto userPostDto = new UserPostDto(rolesStringArray, "jadey", "123", "Nijmegen", "bv");
+        UserPostDto userPostDto = new UserPostDto("VISITOR", "jadey", "123", "Nijmegen", "bv");
 
         roleRepos.save(role);
 
         Mockito.when(encoder.encode("123")).thenReturn("123");
-        Mockito.when(roleRepos.findById("VISITOR")).thenReturn(or);
+        Mockito.when(roleRepos.findById(RoleOption.VISITOR)).thenReturn(or);
         or.ifPresent(roles::add);
 
-        assertEquals(user, userService.createUser(userPostDto));
+        assertEquals(user.getUsername(), userService.createUser(userPostDto));
     }
 
     @Test

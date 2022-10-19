@@ -3,12 +3,10 @@ package com.example.EindOpdrachtBackend.dtos;
 import com.example.EindOpdrachtBackend.models.CategoryOption;
 import com.example.EindOpdrachtBackend.validation.ValueOfCategoryEnum;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import java.util.Date;
 import java.util.Objects;
@@ -33,10 +31,12 @@ public class EventPostDto {
     @Size(max = 50)
     private String address;
     @NotNull
-    @Size(max = 10)
+    @Min(value = -90)
+    @Max(value = 90)
     private Double latCoordinate;
     @NotNull
-    @Size(max = 10)
+    @Min(value = -180)
+    @Max(value = 180)
     private Double longCoordinate;
     @NotNull
     @Size(max = 20)
@@ -66,3 +66,4 @@ public class EventPostDto {
         return Objects.hash(category, name, location, address, latCoordinate, longCoordinate, entryPrice, textDescription, startDate, endDate);
     }
 }
+
