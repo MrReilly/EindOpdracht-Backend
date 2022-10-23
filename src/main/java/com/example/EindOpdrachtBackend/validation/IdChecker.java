@@ -25,7 +25,7 @@ public class IdChecker {
         }
 
         else {
-            throw new RecordNotFoundException("user not found");
+            throw new RecordNotFoundException("User not found");
         }
     }
 

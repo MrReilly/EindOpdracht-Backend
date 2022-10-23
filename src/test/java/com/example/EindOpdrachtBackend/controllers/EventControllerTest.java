@@ -50,12 +50,12 @@ class EventControllerTest {
     @DisplayName("Should return all Events")
     void shouldReturnAllEvent() throws Exception{
 
-        List<Event> events = new ArrayList<>();
+        List<EventGetDto> events = new ArrayList<>();
 
         Mockito.when(eventService.getAllEvents()).thenReturn(events);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/event/All"))
+                .perform(MockMvcRequestBuilders.get("/event/all"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", is(events)));

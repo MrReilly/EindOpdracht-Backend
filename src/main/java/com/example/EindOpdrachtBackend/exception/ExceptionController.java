@@ -13,5 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
         }
 
+        @ExceptionHandler(value = RecordAlreadyExistsException.class)
+        public ResponseEntity<Object> exception(RecordAlreadyExistsException exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.ALREADY_REPORTED);
+        }
+
 
     }

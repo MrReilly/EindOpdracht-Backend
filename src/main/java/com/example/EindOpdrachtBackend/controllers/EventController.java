@@ -42,7 +42,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/event/All")
+    @GetMapping("/event/all")
     public ResponseEntity<Object> getAllEvent() {
         return new ResponseEntity<>(service.getAllEvents(), HttpStatus.OK);
     }

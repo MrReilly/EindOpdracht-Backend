@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,7 +138,7 @@ public class UserService {
             return (event.getName() + " added to favorites of user " + user.getUsername());
         }
 
-            return "This event is already in your favorite list!";
+            throw new DuplicateFormatFlagsException("This event is already in your favorite list!");
     }
 
     public String deleteUser(String username) {
@@ -152,7 +153,7 @@ public class UserService {
             return cUser.getUsername();
         }
 
-        return "you are not allowed to delete this user!";
+        throw new IllegalArgumentException("you are not allowed to delete this user!");
     }
 
     public Long removeFavorite(Long id){

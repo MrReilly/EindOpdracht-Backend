@@ -1,5 +1,6 @@
 package com.example.EindOpdrachtBackend.services;
 
+import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import com.example.EindOpdrachtBackend.mappers.CategoryMapper;
 import com.example.EindOpdrachtBackend.models.Category;
 import com.example.EindOpdrachtBackend.models.CategoryOption;
@@ -29,7 +30,7 @@ public class CategoryService {
             return mapper.CategoryGetDto(oc.get());
         }
 
-        return "Category not found";
+        throw new RecordNotFoundException("Category not found");
 
     }
 

@@ -37,4 +37,11 @@ public class ImageDataController {
 
     }
 
+    @DeleteMapping("/image/{eventId}")
+    public ResponseEntity<Object>  deleteImage(@PathVariable Long eventId){
+
+    return new ResponseEntity<>(service.removeImage(eventId), HttpStatus.OK);
+}
+
+
 }

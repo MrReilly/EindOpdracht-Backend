@@ -1,5 +1,6 @@
 package com.example.EindOpdrachtBackend.services;
 
+import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.dtos.ReviewGetDto;
@@ -98,7 +99,7 @@ public class ReviewService {
             return id;
         }
 
-        return "The review was not deleted";
+        throw new RecordNotFoundException("The review was not deleted");
     }
     }
 

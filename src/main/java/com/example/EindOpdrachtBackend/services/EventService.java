@@ -1,6 +1,8 @@
 package com.example.EindOpdrachtBackend.services;
 
+import com.example.EindOpdrachtBackend.dtos.EventGetDto;
 import com.example.EindOpdrachtBackend.dtos.EventPostDto;
+import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import com.example.EindOpdrachtBackend.mappers.EventMapper;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,9 +30,18 @@ public class EventService {
         this.idChecker = idChecker;
     }
 
-    public List<Event> getAllEvents() {
+    public List<EventGetDto> getAllEvents() {
 
-        return (List<Event>) repos.findAll();
+         List<Event> allEvents = (List<Event>) repos.findAll();
+
+         List<EventGetDto> allEventDtos = new ArrayList<>();
+
+        for (Event event : allEvents) {
+
+            allEventDtos.add(mapper.toDto(event));
+        }
+
+        return allEventDtos;
     }
 
     public Event createEvent(EventPostDto dto) {
@@ -65,7 +77,7 @@ public class EventService {
             return "The event was updated successfully!";
         }
 
-            return "Event not updated";
+            throw new RecordNotFoundException("Event not updated");
     }
 
     public String deleteEvent(Long id) {
@@ -80,6 +92,6 @@ public class EventService {
             return "The event was deleted successfully!";
         }
 
-        return "Event was not deleted";
+        throw new RecordNotFoundException("Event was not deleted");
     }
 }

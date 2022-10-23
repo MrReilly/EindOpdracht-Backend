@@ -1,5 +1,7 @@
 package com.example.EindOpdrachtBackend.services;
 
+import com.example.EindOpdrachtBackend.exception.RecordAlreadyExistsException;
+import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import com.example.EindOpdrachtBackend.mappers.ImageDataMapper;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.models.ImageData;
@@ -32,18 +34,23 @@ public class ImageDataService {
 
             Event event = oe.get();
 
-            ImageData newImageData =  mapper.toEntity(image, event);
+            if (event.getImageData() != null) {
 
-            event.setImageData(newImageData);
+                throw new RecordAlreadyExistsException("Event already has an image");
+            }
 
-            imageDataRepository.save(newImageData);
-            eventRepository.save(event);
+                ImageData newImageData = mapper.toEntity(image, event);
 
-            return "file uploaded successfully : " + image.getOriginalFilename();
+                event.setImageData(newImageData);
+
+                imageDataRepository.save(newImageData);
+                eventRepository.save(event);
+
+                return "file uploaded successfully : " + image.getOriginalFilename();
+            }
+
+            throw new RecordNotFoundException("Event was not found");
         }
-
-        return "Event was not found";
-    }
 
         public Object downloadImage (Long imageId){
 
@@ -53,8 +60,48 @@ public class ImageDataService {
                 return dbImageData.get().getImage();
             }
 
-            return "image not in the database";
+            throw new RecordNotFoundException("image not in the database");
         }
+
+        public  Object removeImage (Long eventId){
+
+        Optional <Event> oe = eventRepository.findById(eventId);
+
+            if (oe.isPresent()) {
+                Event event = oe.get();
+
+                ImageData image = event.getImageData();
+
+                if (image == null) {
+                    throw new RecordNotFoundException("This Event does not  have an Image yet");
+                }
+
+                Optional<ImageData> oi = imageDataRepository.findById(event.getImageData().getId());
+
+                ImageData imageDataToRemove = null;
+
+                if (oi.isPresent()) {
+
+                    imageDataToRemove = oi.get();
+
+                    imageDataToRemove.setEvent(null);
+                }
+
+                event.setImageData(null);
+
+                if(imageDataToRemove == null){
+
+                    throw new RecordNotFoundException("Image not in database");
+                }
+
+                imageDataRepository.delete(imageDataToRemove);
+
+                eventRepository.save(event);
+            }
+
+            return "Image of Event " + eventId + " was removed  successfully";
+        }
+
     }
 
 

@@ -32,19 +32,22 @@ public class EventMapper {
 
             Integer averageStarRating = 0;
 
-            for (Review review : fullList) {
+            if(fullList.size() >0 ) {
 
-                Review censoredReview = new Review();
+                for (Review review : fullList) {
 
-                censoredReview.setId(review.getId());
-                censoredReview.setReviewDate(review.getReviewDate());
-                censoredReview.setAuthorName(review.getAuthor().getUsername());
-                censoredReview.setReviewText(review.getReviewText());
-                censoredReview.setStarRating(review.getStarRating());
+                    Review censoredReview = new Review();
 
-                censoredReviewList.add(censoredReview);
+                    censoredReview.setId(review.getId());
+                    censoredReview.setReviewDate(review.getReviewDate());
+                    censoredReview.setAuthorName(review.getAuthor().getUsername());
+                    censoredReview.setReviewText(review.getReviewText());
+                    censoredReview.setStarRating(review.getStarRating());
 
-                averageStarRating += review.getStarRating();
+                    censoredReviewList.add(censoredReview);
+
+                    averageStarRating += review.getStarRating();
+                }
             }
 
             mapped.setReviews(censoredReviewList);

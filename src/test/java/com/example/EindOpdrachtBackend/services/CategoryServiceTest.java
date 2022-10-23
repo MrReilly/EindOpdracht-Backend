@@ -2,6 +2,7 @@ package com.example.EindOpdrachtBackend.services;
 
 import com.example.EindOpdrachtBackend.dtos.CategoryGetDto;
 import com.example.EindOpdrachtBackend.dtos.EventGetDto;
+import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import com.example.EindOpdrachtBackend.mappers.CategoryMapper;
 import com.example.EindOpdrachtBackend.models.Category;
 import com.example.EindOpdrachtBackend.models.CategoryOption;
@@ -66,29 +67,4 @@ public class CategoryServiceTest {
         assertEquals(categoryGetDto, categoryService.getCategory(CategoryOption.FAIR));
     }
 
-    @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
-    @DisplayName("Should return a error message, Category not found")
-    void shouldReturnErrorMessage() {
-
-        CategoryService categoryService = new CategoryService(mapper, repos);
-
-        List<Event> eventList = new ArrayList<>();
-        List<EventGetDto> listEventGetDto = new ArrayList<>();
-        CategoryGetDto categoryGetDto = new CategoryGetDto();
-        Category category = new Category(CategoryOption.FAIR, eventList);
-
-        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
-        EventGetDto eventGetDto = new EventGetDto(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null);
-
-        eventList.add(event);
-        listEventGetDto.add(eventGetDto);
-        categoryGetDto.setEvents(listEventGetDto);
-
-        Mockito.when(repos.findById(CategoryOption.CIRCUS)).thenReturn(Optional.of((category)));
-
-        Mockito.when(mapper.CategoryGetDto(Mockito.any(Category.class))).thenReturn(categoryGetDto);
-
-        assertEquals("Category not found", categoryService.getCategory(CategoryOption.FAIR) );
-    }
 }

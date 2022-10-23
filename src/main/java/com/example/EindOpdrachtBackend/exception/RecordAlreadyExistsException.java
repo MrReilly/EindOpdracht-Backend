@@ -1,16 +1,17 @@
 package com.example.EindOpdrachtBackend.exception;
 
-
 import java.io.Serial;
 
-public class RecordNotFoundException extends RuntimeException {
+public class RecordAlreadyExistsException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    public RecordNotFoundException() {
+    public RecordAlreadyExistsException() {
         super();
     }
-    public RecordNotFoundException(String message) {
+    public RecordAlreadyExistsException(String message) {
         super(message);
     }
 }
+
+
