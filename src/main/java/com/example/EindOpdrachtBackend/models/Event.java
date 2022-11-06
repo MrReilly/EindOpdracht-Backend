@@ -1,5 +1,6 @@
 package com.example.EindOpdrachtBackend.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.LazyCollection;
@@ -33,12 +34,13 @@ public class Event {
     private Double longCoordinate;
     private String entryPrice;
     private String textDescription;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date startDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDate;
     private Integer starRating;
-    @OneToOne(
-            mappedBy = "event",
-            cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "image_id")
     private ImageData imageData;
     @ManyToOne
     @JoinColumn(name = "organizer")

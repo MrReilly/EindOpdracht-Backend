@@ -45,11 +45,9 @@ public class EventPostDto {
     @Size(max = 150)
     private String textDescription;
     @NotNull
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @FutureOrPresent
     private Date startDate;
     @NotNull
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @Future
     private Date endDate;
 

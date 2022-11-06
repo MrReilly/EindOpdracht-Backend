@@ -4,6 +4,7 @@ package com.example.EindOpdrachtBackend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -26,13 +27,13 @@ public class ImageData {
 
     private String name;
     private String type;
-    @OneToOne
-    @JsonIgnore
-    private Event event;
+    private String downloadUri;
 
     @Lob
-    @Column(name = "image", length = 1000)
+    @Column(name = "image")
     private byte[] image;
+
+
 
     @Override
     public boolean equals(Object o) {

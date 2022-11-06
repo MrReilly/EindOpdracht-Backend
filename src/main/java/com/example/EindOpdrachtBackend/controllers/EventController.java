@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -38,7 +37,7 @@ public class EventController {
 
             Event newEvent = service.createEvent(dto);
 
-            return new ResponseEntity<>("Event created successfully with ID " + newEvent.getId(), HttpStatus.CREATED);
+            return new ResponseEntity<>(newEvent.getId(), HttpStatus.CREATED);
         }
     }
 

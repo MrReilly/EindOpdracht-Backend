@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-import com.example.EindOpdrachtBackend.models.Event;
 import lombok.*;
 
 @Getter
@@ -8,11 +7,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ImageDataDto {
+public class ImageGetDto {
 
     private String name;
     private String type;
-    private Event event;
-    private byte[] image;
+    private String downloadUri;
+
 
 }

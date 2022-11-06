@@ -24,8 +24,6 @@ public class EventMapper {
 
            EventGetDto mapped = mapper.map(event, EventGetDto.class);
 
-           mapped.setImageData(null);
-
             List<Review> fullList = event.getReviews();
 
             List<Review> censoredReviewList = new ArrayList<>();

@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import static com.example.EindOpdrachtBackend.validation.StringBuilderValidation.stringBuilder;
 
+
 @RestController
 public class UserController {
 
@@ -44,19 +45,19 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<Object> getUser() {
 
-        return new ResponseEntity<>(service.getUserProfile(), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getUserProfile(), HttpStatus.OK);
         }
 
     @GetMapping("/user/myFavorites")
     public ResponseEntity<Object> getMyFavorites() {
 
-        return new ResponseEntity<>((service.getMyFavoriteEvents()), HttpStatus.FOUND);
+        return new ResponseEntity<>((service.getMyFavoriteEvents()), HttpStatus.OK);
     }
 
     @GetMapping("/user/myEvents")
     public ResponseEntity<Object> getMyEvents() {
 
-        return new ResponseEntity<>((service.getMyEvents()), HttpStatus.FOUND);
+        return new ResponseEntity<>((service.getMyEvents()), HttpStatus.OK);
     }
 
     @PutMapping("/user")
