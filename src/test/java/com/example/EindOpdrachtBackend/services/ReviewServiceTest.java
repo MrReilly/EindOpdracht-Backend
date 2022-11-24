@@ -36,19 +36,19 @@ class ReviewServiceTest {
     @MockBean
     JwtService jwtService;
     @MockBean
-    private ReviewRepository reviewRepos;
+    ReviewRepository reviewRepos;
     @MockBean
-    private EventRepository eventRepos;
+    EventRepository eventRepos;
     @MockBean
-    private UserRepository userRepos;
+    UserRepository userRepos;
     @MockBean
-    private ReviewMapper mapper;
+    ReviewMapper mapper;
     @MockBean
-    private AuthService currentUser;
+    AuthService currentUser;
     @MockBean
-    private IdChecker idChecker;
+    IdChecker idChecker;
     @Captor
-    private ArgumentCaptor<Review> reviewArgumentCaptor;
+    ArgumentCaptor<Review> reviewArgumentCaptor;
 
     @Test
     @WithMockUser(username="jadey", roles="VISITOR")
@@ -70,12 +70,10 @@ class ReviewServiceTest {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
 
         Category category = new Category(CategoryOption.FAIR, null);
-        Collection<Role> roles = new ArrayList<>();
 
         Role role = new Role(RoleOption.ORGANIZER, null);
-        roles.add(role);
 
-        User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
+        User user = new User("jadey", "123", "bv", role, null, null, null);
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
 
@@ -98,15 +96,33 @@ class ReviewServiceTest {
 
     @Test
     @WithMockUser(username="jadey", roles="VISITOR")
-    @DisplayName("Should return a review")
-    void shouldReturnReview() {
+    @DisplayName("Should return a List of reviews")
+    void shouldReturnListOfReviews() {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
 
-        ReviewGetDto reviewGetDto = new ReviewGetDto(1L, 1L, "thomas", "It was nice!", DateConverter.parseDate("2023-01-02"), 1);
+        List<Review> reviewList = new ArrayList<>();
 
-        Mockito.when(reviewService.getReview(1L)).thenReturn(reviewGetDto);
+        Category category = new Category(CategoryOption.FAIR, null);
 
-        assertEquals(reviewGetDto, reviewService.getReview(1L));
+        Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", null, null, 2, null, null, reviewList, null);
+
+        Review review = new Review(1L, "thomas", "It was nice!", DateConverter.parseDate("2022-11-30"), 1, event,null) ;
+        reviewList.add(review);
+
+        event.setReviews(reviewList);
+
+        eventRepos.save(event);
+
+        eventRepos.findById(event.getId());
+
+        ReviewGetDto reviewGetDto = new ReviewGetDto(1L, 1L, "thomas", "It was nice!", DateConverter.parseDate("2022-11-30"), 1);
+        List<ReviewGetDto> reviewDtoList = new ArrayList<>();
+        reviewDtoList.add(reviewGetDto);
+
+        Mockito.when(idChecker.checkID(1L, eventRepos)).thenReturn(event);
+        Mockito.when(mapper.toDto(review)).thenReturn(reviewGetDto);
+
+        assertEquals(reviewDtoList, reviewService.getReview(1L));
     }
 
     @Test
@@ -116,15 +132,13 @@ class ReviewServiceTest {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
 
         Category category = new Category(CategoryOption.FAIR, null);
-        Collection<Role> roles = new ArrayList<>();
 
         Role role = new Role(RoleOption.ORGANIZER, null);
-        roles.add(role);
 
         List<Review> eventReviewList = new ArrayList<>();
         List<Review> userReviewList = new ArrayList<>();
 
-        User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
+        User user = new User("jadey", "123", "bv", role, null, null, null);
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
 

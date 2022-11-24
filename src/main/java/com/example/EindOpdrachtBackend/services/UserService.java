@@ -43,8 +43,6 @@ public class UserService {
         this.idChecker = idChecker;
     }
 
-    List<Role> userRoles = new ArrayList<>();
-
     public List<User> getAllUsers() {
 
         return (List<User>) userRepos.findAll();
@@ -56,16 +54,16 @@ public class UserService {
 
         newUser.setUsername(dto.getUsername());
         newUser.setPassword(encoder.encode(dto.getPassword()));
-        newUser.setDefaultLocation(dto.getDefaultLocation());
         newUser.setOrganizationName(dto.getOrganizationName());
 
-        String role = dto.getRole();
+            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
 
-            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(role));
+            if(or.isPresent()){
 
-            or.ifPresent(userRoles::add);
+                Role newRole = or.get();
 
-        newUser.setRoles(userRoles);
+                newUser.setRole(newRole);
+            }
 
         userRepos.save(newUser);
 
@@ -104,17 +102,25 @@ public class UserService {
 
         User user = currentUser.authenticateUser();
 
-                User updated = mapper.updateUser(dto, user);
+        user.setOrganizationName(dto.getOrganizationName());
 
-        for (String rolename : dto.getRoles()) {
-            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(rolename));
-
-            or.ifPresent(userRoles::add);
+        if(dto.getPassword() == null){
+            assert true;
+        }
+        else {
+        user.setPassword(encoder.encode(dto.getPassword()));
         }
 
-        updated.setRoles(userRoles);
+            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
 
-                User saved = userRepos.save(updated);
+            if(or.isPresent()) {
+
+                Role newRole = or.get();
+
+                user.setRole(newRole);
+            }
+
+                User saved = userRepos.save(user);
 
                 return saved.getUsername();
             }

@@ -8,9 +8,7 @@ import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class EventService {
     private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public EventService(@Qualifier("events") EventRepository repos, EventMapper mapper, AuthService currentUser, IdChecker idChecker) {
+    public EventService(EventRepository repos, EventMapper mapper, AuthService currentUser, IdChecker idChecker) {
 
         this.repos = repos;
         this.mapper = mapper;

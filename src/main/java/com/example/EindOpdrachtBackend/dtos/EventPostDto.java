@@ -42,7 +42,7 @@ public class EventPostDto {
     @Size(max = 20)
     private String entryPrice;
     @NotNull
-    @Size(max = 150)
+    @Size(max = 300)
     private String textDescription;
     @NotNull
     @FutureOrPresent

@@ -68,17 +68,11 @@ public class UserMapper {
          UserGetDto profileDetails = new UserGetDto();
 
          profileDetails.setUsername(user.getUsername());
-         profileDetails.setDefaultLocation(user.getDefaultLocation());
          profileDetails.setOrganizationName(user.getOrganizationName());
-         profileDetails.setRoles(user.getRoles().toArray());
+         profileDetails.setRole(user.getRole().getRolename().toString());
 
         return profileDetails;
     }
 
-        public User updateUser(UserDetailsUpdateDto dto, User user){
-
-            mapper.map(dto, user);
-            return user;
-        }
     }
 

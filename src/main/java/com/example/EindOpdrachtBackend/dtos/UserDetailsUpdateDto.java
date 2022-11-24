@@ -1,11 +1,14 @@
 package com.example.EindOpdrachtBackend.dtos;
 
+import com.example.EindOpdrachtBackend.models.RoleOption;
+import com.example.EindOpdrachtBackend.validation.ValueOfRoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -13,10 +16,12 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class UserDetailsUpdateDto {
 
-    private String[] roles;
-    private String username;
-    private String defaultLocation;
+    @ValueOfRoleEnum(enumClass = RoleOption.class)
+    private String role;
+    @Size(max = 30)
     private String organizationName;
+    @Size(max = 30)
+    private String password;
 
 }
 

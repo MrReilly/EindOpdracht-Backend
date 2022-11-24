@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -25,8 +27,9 @@ public class Role {
     @Enumerated(value = EnumType.STRING)
     private RoleOption rolename;
 
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "role")
     @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private Collection<User> users;
 

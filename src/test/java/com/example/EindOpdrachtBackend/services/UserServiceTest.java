@@ -74,20 +74,19 @@ class UserServiceTest {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
         List<User> users = new ArrayList<>();
-        List<Role> roles = new ArrayList<>();
+
         Role role = new Role(RoleOption.VISITOR, users);
         Optional<Role> or = roleRepos.findById(RoleOption.VISITOR);
-        roles.add(role);
 
-        User user = new User("jadey", "123", "Nijmegen", "bv",roles, null, null, null);
+
+        User user = new User("jadey", "123", "bv",role, null, null, null);
         users.add(user);
-        UserPostDto userPostDto = new UserPostDto("VISITOR", "jadey", "123", "Nijmegen", "bv");
+        UserPostDto userPostDto = new UserPostDto("VISITOR", "jadey", "123", "bv");
 
         roleRepos.save(role);
 
         Mockito.when(encoder.encode("123")).thenReturn("123");
         Mockito.when(roleRepos.findById(RoleOption.VISITOR)).thenReturn(or);
-        or.ifPresent(roles::add);
 
         assertEquals(user.getUsername(), userService.createUser(userPostDto));
     }
@@ -98,8 +97,8 @@ class UserServiceTest {
     void shouldReturnUser() {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
-        User user = new User("jadey", "123", "Nijmegen", "bv",null , null, null, null);
-        UserGetDto userGetDto = new UserGetDto("thomas", "Nijmegen", "ok bv", null , null, null, null);
+        User user = new User("jadey", "123", "bv",null , null, null, null);
+        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null , null, null, null);
 
         Mockito.when(currentUser.authenticateUser()).thenReturn(user);
         Mockito.when(mapper.mapUser(user)).thenReturn(userGetDto);
@@ -115,8 +114,8 @@ class UserServiceTest {
 
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
-        User user = new User("jadey", "123", "Nijmegen", "bv",null , null, null, null);
-        UserGetDto userGetDto = new UserGetDto("thomas", "Nijmegen", "ok bv", null , null, null, null);
+        User user = new User("jadey", "123", "bv",null , null, null, null);
+        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null , null, null, null);
 
         Mockito.when(currentUser.authenticateUser()).thenReturn(user);
         Mockito.when(mapper.mapUser(user)).thenReturn(userGetDto);
@@ -131,7 +130,7 @@ class UserServiceTest {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
         UserFavoriteGetDto favoritesDto = new UserFavoriteGetDto();
-        User user = new User("jadey", "123", "Nijmegen", "bv",null , null, null, null);
+        User user = new User("jadey", "123", "bv",null , null, null, null);
         List<Object> favoriteEvents = new ArrayList<>();
         Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
         favoriteEvents.add(event);
@@ -151,7 +150,7 @@ class UserServiceTest {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
         UserMyEventGetDto myEventsDto = new UserMyEventGetDto();
-        User user = new User("jadey", "123", "Nijmegen", "bv",null , null, null, null);
+        User user = new User("jadey", "123", "bv",null , null, null, null);
         List<Object> myEventsEvents = new ArrayList<>();
         Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
         myEventsEvents.add(event);

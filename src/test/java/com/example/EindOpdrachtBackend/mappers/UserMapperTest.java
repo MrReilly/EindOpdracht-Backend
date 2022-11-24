@@ -43,13 +43,12 @@ class UserMapperTest {
 
         UserMapper userMapper = new UserMapper(modelMapper, eventService);
 
-        List<Role> listRoles = new ArrayList<>();
-        Object[] objectRoles = listRoles.toArray(new Role[0]);
         Role role = new Role(RoleOption.ORGANIZER, null);
-        listRoles.add(role);
+        String stringRole = role.toString();
 
-        User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, null, null, null);
-        UserGetDto userGetDto = new UserGetDto("thomas", "Nijmegen", "ok bv", objectRoles , null, null, null);
+
+        User user = new User("thomas", "123", "bv",role, null, null, null);
+        UserGetDto userGetDto = new UserGetDto("thomas",  "ok bv", stringRole , null, null, null);
 
         Mockito.when(modelMapper.map(user, UserGetDto.class)).thenReturn(userGetDto);
 
@@ -63,13 +62,11 @@ class UserMapperTest {
 
         UserMapper userMapper = new UserMapper(modelMapper, eventService);
 
-        List<Role> listRoles = new ArrayList<>();
-        Object[] objectRoles = listRoles.toArray(new Role[0]);
         Role role = new Role(RoleOption.ORGANIZER, null);
-        listRoles.add(role);
+        String stringRole = role.toString();
 
-        User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, null, null, null);
-        UserGetDto profileDetails = new UserGetDto("thomas", "Nijmegen", "ok bv", objectRoles , null, null, null);
+        User user = new User("thomas", "123", "bv", role, null, null, null);
+        UserGetDto profileDetails = new UserGetDto("thomas",  "ok bv", stringRole , null, null, null);
 
         Mockito.when(modelMapper.map(user, UserGetDto.class)).thenReturn(profileDetails);
 
@@ -84,12 +81,12 @@ class UserMapperTest {
 
         UserMapper userMapper = new UserMapper(modelMapper, eventService);
 
-        List<Role> listRoles = new ArrayList<>();
+        Role role = new Role(RoleOption.ORGANIZER, null);
         List<Event> favoriteEvents = new ArrayList<>();
         List<Object> objectFavoriteEvents = new ArrayList<>();
 
         UserFavoriteGetDto userFavoriteGetDto = new UserFavoriteGetDto(objectFavoriteEvents);
-        User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, favoriteEvents, null, null);
+        User user = new User("thomas", "123", "bv", role, favoriteEvents, null, null);
 
 
         assertEquals(userFavoriteGetDto, userMapper.mapMyFavorites(user));
@@ -103,12 +100,12 @@ class UserMapperTest {
 
         UserMapper userMapper = new UserMapper(modelMapper, eventService);
 
-        List<Role> listRoles = new ArrayList<>();
+        Role role = new Role(RoleOption.ORGANIZER, null);
         List<Event> myEvents = new ArrayList<>();
         List<Object> objectMyEvents = new ArrayList<>();
 
         UserMyEventGetDto userMyEventGetDto = new UserMyEventGetDto(objectMyEvents);
-        User user = new User("thomas", "123", "Nijmegen", "bv",listRoles, null, null, myEvents);
+        User user = new User("thomas", "123", "bv", role, null, null, myEvents);
 
 
         assertEquals(userMyEventGetDto, userMapper.mapMyEvents(user));

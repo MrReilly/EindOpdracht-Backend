@@ -22,9 +22,6 @@ public class UserPostDto {
         @NotNull
         @Size(max = 30)
         private String password;
-        @NotNull
-        @Size(max = 30)
-        private String defaultLocation;
         @Size(max = 30)
         private String organizationName;
     }

@@ -66,18 +66,19 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/user/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/review/**").hasAnyAuthority("VISITOR")
-                .antMatchers(HttpMethod.DELETE, "/review/**").hasAnyAuthority("VISITOR")
-                .antMatchers(HttpMethod.POST, "/event").hasAnyAuthority("ORGANIZER")
-                .antMatchers(HttpMethod.PUT, "/event/**").hasAnyAuthority("ORGANIZER")
+                .antMatchers(HttpMethod.GET, "/review/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/review/**").hasAnyAuthority("VISITOR", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/review/**").hasAnyAuthority("VISITOR", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/event").hasAnyAuthority("ORGANIZER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/event/**").hasAnyAuthority("ORGANIZER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/event/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/event/**").hasAnyAuthority("ORGANIZER")
-                .antMatchers("/user/myFavorites/**").hasAnyAuthority("VISITOR")
-                .antMatchers("/user/myFavorites").hasAnyAuthority("VISITOR")
-                .antMatchers("/user/myEvents/**").hasAnyAuthority("ORGANIZER")
-                .antMatchers("/user/myEvents").hasAnyAuthority("ORGANIZER")
-                .antMatchers("/category/**").hasAnyAuthority("VISITOR", "ORGANIZER")
-                .antMatchers("/**").hasAnyAuthority("ORGANIZER", "VISITOR")
+                .antMatchers(HttpMethod.DELETE, "/event/**").hasAnyAuthority("ORGANIZER", "ADMIN")
+                .antMatchers("/user/myFavorites/**").hasAnyAuthority("VISITOR", "ORGANIZER", "ADMIN")
+                .antMatchers("/user/myFavorites").hasAnyAuthority("VISITOR", "ORGANIZER", "ADMIN")
+                .antMatchers("/user/myEvents/**").hasAnyAuthority("ORGANIZER", "ADMIN")
+                .antMatchers("/user/myEvents").hasAnyAuthority("ORGANIZER", "ADMIN")
+                .antMatchers("/category/**").hasAnyAuthority("VISITOR", "ORGANIZER", "ADMIN")
+                .antMatchers("/**").hasAnyAuthority("ORGANIZER", "VISITOR", "ADMIN")
                 .and()
                 .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
                 .cors().configurationSource(corsConfigurationSource())
@@ -91,7 +92,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

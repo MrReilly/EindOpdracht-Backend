@@ -11,9 +11,9 @@ import com.example.EindOpdrachtBackend.models.Review;
 import com.example.EindOpdrachtBackend.repositories.ReviewRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +26,7 @@ public class ReviewService {
     private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public ReviewService(@Qualifier("reviews")
-                         ReviewRepository reviewRepos, EventRepository eventRepos, UserRepository userRepos, ReviewMapper mapper, AuthService currentUser, IdChecker idChecker) {
+    public ReviewService(ReviewRepository reviewRepos, EventRepository eventRepos, UserRepository userRepos, ReviewMapper mapper, AuthService currentUser, IdChecker idChecker) {
 
         this.reviewRepos = reviewRepos;
         this.eventRepos = eventRepos;
@@ -59,11 +58,24 @@ public class ReviewService {
             return newReview;
         }
 
-    public ReviewGetDto getReview(Long id) {
+    public List<ReviewGetDto> getReview(Long id) {
 
-        Review toGet = (Review) idChecker.checkID(id, reviewRepos);
+        Event toGet = (Event) idChecker.checkID(id, eventRepos);
 
-        return mapper.toDto(toGet);
+        List<Review> eventReviews = toGet.getReviews();
+
+        List<ReviewGetDto> mappedList = new ArrayList<>();
+
+        for (int i = 0; i < eventReviews.size(); i++) {
+
+            Review review = eventReviews.get(i);
+
+            ReviewGetDto mappedReview = mapper.toDto(review);
+
+            mappedList.add(mappedReview);
+        }
+
+        return mappedList;
     }
 
     public Object deleteReview(Long id) {

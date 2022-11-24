@@ -23,22 +23,20 @@ import java.util.*;
     @Column(name = "user_id")
     private String username;
     private String password;
-    private String defaultLocation;
     private String organizationName;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_name"))
-    private Collection<Role> roles;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="role")
+    @ToString.Exclude
+    private Role role;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "favorite_saved_events",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id"})})
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
     @JsonIgnore
     @ToString.Exclude
     private List<Event> myFavoriteEvents = new ArrayList<>();

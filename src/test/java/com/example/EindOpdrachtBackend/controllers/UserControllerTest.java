@@ -74,25 +74,23 @@ class UserControllerTest {
     @DisplayName("Should create, save and return user")
     void shouldCreateSaveAndReturnUser() throws  Exception {
 
-        List<Role> listRoles = new ArrayList<>();
         Role role = new Role(RoleOption.ORGANIZER, null);
-        listRoles.add(role);
         List<Event> favoriteEvents = new ArrayList<>();
         List<Review> reviewList = new ArrayList<>();
         List<Event> myEvents = new ArrayList<>();
         Collection<User> users = new ArrayList<>();
 
-        User user = new User("jadey", "123", "Nijmegen", "bv",listRoles, favoriteEvents, reviewList, myEvents);
+        User user = new User("jadey", "123", "bv",role, favoriteEvents, reviewList, myEvents);
         users.add(user);
         role.setUsers(users);
 
-        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "Nijmegen", "");
+        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "");
 
         Mockito.when(userService.createUser(userPostDto)).thenReturn(user.getUsername());
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/user")
-                .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123", "Nijmegen", "")))
+                .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123",  "")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())

@@ -48,10 +48,10 @@ public class ReviewController {
         return new ResponseEntity<>(service.getAllReviews(), HttpStatus.OK);
     }
 
-    @GetMapping("/review/{id}")
-    public ResponseEntity<Object> getReview(@PathVariable Long id) {
+    @GetMapping("/review/{eventId}")
+    public ResponseEntity<Object> getReview(@PathVariable Long eventId) {
 
-            return new ResponseEntity<>( service.getReview(id), HttpStatus.FOUND);
+            return new ResponseEntity<>( service.getReview(eventId), HttpStatus.OK);
         }
 
     @DeleteMapping("/review/{id}")

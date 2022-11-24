@@ -58,21 +58,24 @@ class ReviewControllerTest {
     @Test
     @WithMockUser(username="jadey", roles="ORGANIZER")
     @DisplayName("Should return reviewDto")
-    void shouldReturnReviewDto() throws  Exception{
+    void shouldReturnReviewDtoList() throws  Exception{
 
         ReviewGetDto reviewGetDto = new ReviewGetDto(1L, 1L, "jadey", "It was nice!", DateConverter.parseDate("2023-01-02"), 1);
+        List<ReviewGetDto> reviewList = new ArrayList<>();
 
-        Mockito.when(reviewService.getReview(1L)).thenReturn(reviewGetDto);
+        reviewList.add(reviewGetDto);
+
+        Mockito.when(reviewService.getReview(1L)).thenReturn(reviewList);
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/review/1"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.authorName", is("jadey")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reviewText", is("It was nice!")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.eventId", is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.starRating", is(1)));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].authorName", is("jadey")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].reviewText", is("It was nice!")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].eventId", is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].starRating", is(1)));
     }
 
 }

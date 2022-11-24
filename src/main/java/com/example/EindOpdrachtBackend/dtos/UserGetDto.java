@@ -17,9 +17,8 @@ import java.util.Objects;
 public class UserGetDto {
 
     private String username;
-    private String defaultLocation;
     private String organizationName;
-    private Object[] roles;
+    private String role;
     private List<Object> myFavoriteEvents;
     private List<Review> myReviews;
     private List<Object> myEvents;
@@ -29,16 +28,12 @@ public class UserGetDto {
         if (this == o) return true;
         if (!(o instanceof UserGetDto)) return false;
         UserGetDto that = (UserGetDto) o;
-        return Objects.equals(username, that.username) && Objects.equals(defaultLocation, that.defaultLocation) && Objects.equals(organizationName, that.organizationName) && Arrays.equals(roles, that.roles) && Objects.equals(myFavoriteEvents, that.myFavoriteEvents) && Objects.equals(myReviews, that.myReviews) && Objects.equals(myEvents, that.myEvents);
+        return Objects.equals(username, that.username) && Objects.equals(organizationName, that.organizationName) && Objects.equals(role, that.role) && Objects.equals(myFavoriteEvents, that.myFavoriteEvents) && Objects.equals(myReviews, that.myReviews) && Objects.equals(myEvents, that.myEvents);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(username, defaultLocation, organizationName, myFavoriteEvents, myReviews, myEvents);
-        result = 31 * result + Arrays.hashCode(roles);
-        return result;
+        return Objects.hash(username, organizationName, role, myFavoriteEvents, myReviews, myEvents);
     }
-
-
 }
 

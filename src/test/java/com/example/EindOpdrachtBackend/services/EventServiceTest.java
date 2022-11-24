@@ -63,11 +63,10 @@ class EventServiceTest {
     void shouldCreateEventAndReturnId() {
 
         Category category = new Category(CategoryOption.FAIR, null);
-        Collection<Role> roles = new ArrayList<>();
 
         Role role = new Role(RoleOption.ORGANIZER, null);
-        roles.add(role);
-        User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
+
+        User user = new User("jadey", "123",  "bv", role, null, null, null);
 
         EventService eventService = new EventService(repos, mapper, currentUser, idChecker);
 
@@ -122,11 +121,10 @@ class EventServiceTest {
         EventService eventService = new EventService(repos, mapper, currentUser, idChecker);
 
         Category category = new Category(CategoryOption.FAIR, null);
-        Collection<Role> roles = new ArrayList<>();
 
         Role role = new Role(RoleOption.ORGANIZER, null);
-        roles.add(role);
-        User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
+
+        User user = new User("jadey", "123", "bv", role, null, null, null);
 
         EventPostDto eventPostDto = new EventPostDto("FAIR", "Kermis", "Arnhem", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"));
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, user, null, null);
@@ -163,11 +161,9 @@ class EventServiceTest {
     @DisplayName("Should delete the Event for repos and return the event id")
     void shouldDeleteEventAndReturnId() {
 
-        Collection<Role> roles = new ArrayList<>();
-
         Role role = new Role(RoleOption.ORGANIZER, null);
-        roles.add(role);
-        User user = new User("jadey", "123", "Nijmegen", "bv", roles, null, null, null);
+
+        User user = new User("jadey", "123", "bv", role, null, null, null);
 
         EventService eventService = new EventService(repos, mapper, currentUser, idChecker);
 

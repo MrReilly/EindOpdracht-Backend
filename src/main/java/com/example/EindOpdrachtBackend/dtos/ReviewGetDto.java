@@ -33,3 +33,5 @@ public class ReviewGetDto {
         return Objects.hash(id, eventId, authorName, reviewText, reviewDate, starRating);
     }
 }
+
+
