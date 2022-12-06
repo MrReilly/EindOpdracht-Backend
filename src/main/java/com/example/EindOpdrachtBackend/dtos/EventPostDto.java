@@ -22,13 +22,12 @@ public class EventPostDto {
     @ValueOfCategoryEnum(enumClass = CategoryOption.class)
     private String category;
     @NotNull
-    @Size(max = 50)
+    @Size(max = 30)
     private String name;
     @NotNull
-    @Size(max = 50)
     private String location;
     @NotNull
-    @Size(max = 50)
+    @Size(max = 30)
     private String address;
     @NotNull
     @Min(value = -90)
@@ -39,7 +38,7 @@ public class EventPostDto {
     @Max(value = 180)
     private Double longCoordinate;
     @NotNull
-    @Size(max = 20)
+    @Size(max = 15)
     private String entryPrice;
     @NotNull
     @Size(max = 300)

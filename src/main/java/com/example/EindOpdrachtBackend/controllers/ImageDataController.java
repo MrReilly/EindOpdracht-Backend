@@ -45,10 +45,4 @@ public class ImageDataController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "downloadedImage; name=\"" + downloadedImage.getName() + "\"")
                 .body(new ByteArrayResource(downloadedImage.getImage()));
     }
-
-    @DeleteMapping("/image/{eventId}")
-    public ResponseEntity<Object> deleteImage(@PathVariable Long eventId) {
-
-        return new ResponseEntity<>(service.removeImage(eventId), HttpStatus.OK);
-    }
 }

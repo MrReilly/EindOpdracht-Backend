@@ -72,44 +72,6 @@ public class ImageDataService {
         throw new RecordNotFoundException("image not in the database");
     }
 
-    public Object removeImage(Long eventId) {
-
-        Optional<Event> oe = eventRepository.findById(eventId);
-
-        if (oe.isPresent()) {
-            Event event = oe.get();
-
-            ImageData image = event.getImageData();
-
-            if (image == null) {
-                throw new RecordNotFoundException("This Event does not  have an Image yet");
-            }
-
-            Optional<ImageData> oi = imageDataRepository.findById(event.getImageData().getId());
-
-            ImageData imageDataToRemove = null;
-
-            if (oi.isPresent()) {
-
-                imageDataToRemove = oi.get();
-
-            }
-
-            event.setImageData(null);
-
-            if (imageDataToRemove == null) {
-
-                throw new RecordNotFoundException("Image not in database");
-            }
-
-            imageDataRepository.delete(imageDataToRemove);
-
-            eventRepository.save(event);
-        }
-
-        return "Image of Event " + eventId + " was removed  successfully";
-    }
-
 }
 
 

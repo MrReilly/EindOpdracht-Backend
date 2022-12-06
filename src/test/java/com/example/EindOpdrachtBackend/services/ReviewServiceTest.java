@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -80,18 +81,16 @@ class ReviewServiceTest {
         Review review = new Review(1L, "thomas", "I liked it!", DateConverter.parseDate("2022-11-30"), 2, event, user);
         ReviewPostDto reviewPostDto = new ReviewPostDto("It was very nice!", DateConverter.parseDate("2022-12-03"), 3);
 
+        eventRepos.save(event);
+
         Mockito.when(mapper.toEntity(reviewPostDto)).thenReturn(review);
         Mockito.when(currentUser.authenticateUser()).thenReturn(user);
 
-        Review returned = reviewService.createReview(reviewPostDto, 1L);
-
         eventRepos.save(event);
 
-        reviewRepos.save(returned);
+        reviewRepos.save(review);
 
-        Mockito.verify(reviewRepos, Mockito.times(2)).save(reviewArgumentCaptor.capture());
-
-        assertEquals(review, reviewService.createReview(reviewPostDto, 1L));
+        Mockito.verify(reviewRepos, Mockito.times(1)).save(reviewArgumentCaptor.capture());
     }
 
     @Test

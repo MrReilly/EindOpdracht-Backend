@@ -15,7 +15,7 @@ import java.util.Objects;
 public class ReviewPostDto {
 
     @NotNull
-    @Size(max = 150)
+    @Size(max = 255)
     private String reviewText;
     @NotNull
     @FutureOrPresent

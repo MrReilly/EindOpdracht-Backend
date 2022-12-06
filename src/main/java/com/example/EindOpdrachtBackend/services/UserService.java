@@ -13,6 +13,8 @@ import com.example.EindOpdrachtBackend.repositories.RoleRepository;
 import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -125,7 +127,7 @@ public class UserService {
                 return saved.getUsername();
             }
 
-    public String saveFavoriteEvent (Long eventId) {
+    public ResponseEntity<Object> saveFavoriteEvent (Long eventId) {
 
         User user = currentUser.authenticateUser();
 
@@ -141,10 +143,10 @@ public class UserService {
 
             userRepos.save(user);
 
-            return (event.getName() + " added to favorites of user " + user.getUsername());
+            return new ResponseEntity<> (event.getName() + " added your to favorites" ,HttpStatus.CREATED);
         }
+            return new ResponseEntity<>("This event is already in your favorite list!", HttpStatus.ALREADY_REPORTED);
 
-            throw new DuplicateFormatFlagsException("This event is already in your favorite list!");
     }
 
     public String deleteUser(String username) {

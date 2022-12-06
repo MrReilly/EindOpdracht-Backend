@@ -76,7 +76,7 @@ public class UserController {
     @PatchMapping("/user/myFavorites/add/{eventId}")
     public ResponseEntity<Object> saveFavoriteEvent(@PathVariable Long eventId) {
 
-            return new ResponseEntity<>(service.saveFavoriteEvent(eventId), HttpStatus.CREATED);
+           return service.saveFavoriteEvent(eventId);
         }
 
     @DeleteMapping("/user/{username}")

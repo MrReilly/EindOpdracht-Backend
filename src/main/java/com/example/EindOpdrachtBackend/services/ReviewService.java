@@ -11,6 +11,8 @@ import com.example.EindOpdrachtBackend.models.Review;
 import com.example.EindOpdrachtBackend.repositories.ReviewRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,13 +43,19 @@ public class ReviewService {
         return (List<Review>) reviewRepos.findAll();
     }
 
-    public Review createReview(ReviewPostDto dto, Long eventId) {
+    public ResponseEntity<Object> createReview(ReviewPostDto dto, Long eventId) {
 
         Review newReview = mapper.toEntity(dto);
         User user = currentUser.authenticateUser();
-
-
         Event reviewedEvent = (Event)idChecker.checkID(eventId, eventRepos);
+
+        for (int i = 0; i < reviewedEvent.getReviews().size() ; i++) {
+
+           if(reviewedEvent.getReviews().get(i).getAuthorName().equals(user.getUsername())){
+
+               return new ResponseEntity<>("You have already reviewed this event" , HttpStatus.ALREADY_REPORTED);
+            }
+        }
 
             newReview.setEvent(reviewedEvent);
             newReview.setAuthor(user);
@@ -55,7 +63,7 @@ public class ReviewService {
 
             reviewRepos.save(newReview);
 
-            return newReview;
+            return new ResponseEntity<>("Review successfully posted!" , HttpStatus.CREATED);
         }
 
     public List<ReviewGetDto> getReview(Long id) {

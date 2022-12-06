@@ -11,6 +11,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -91,7 +93,9 @@ class EventControllerTest {
     @DisplayName("Should delete Event and return success message")
     void shouldDeleteEvent() throws Exception{
 
-        Mockito.when(eventService.deleteEvent(1L)).thenReturn("The event was deleted successfully!");
+
+
+        Mockito.when(eventService.deleteEvent(1L)).thenReturn(new ResponseEntity<>( "The event was deleted successfully!", HttpStatus.OK));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.delete("/event/1"))

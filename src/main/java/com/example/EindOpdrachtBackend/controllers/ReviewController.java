@@ -36,9 +36,7 @@ public class ReviewController {
 
         } else {
 
-            Review createdReview = service.createReview(dto, eventId);
-
-            return new ResponseEntity<>("Review with ID number " + createdReview.getId() + " was created successfully", HttpStatus.CREATED);
+            return service.createReview(dto, eventId);
         }
     }
 

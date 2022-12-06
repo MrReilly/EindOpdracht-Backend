@@ -8,6 +8,8 @@ import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.models.User;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -78,7 +80,7 @@ public class EventService {
             throw new RecordNotFoundException("Event not updated");
     }
 
-    public String deleteEvent(Long id) {
+    public ResponseEntity<Object> deleteEvent(Long id) {
 
         User user = currentUser.authenticateUser();
         Event event = (Event) idChecker.checkID(id, repos);
@@ -87,9 +89,9 @@ public class EventService {
 
             this.repos.deleteById(event.getId());
 
-            return "The event was deleted successfully!";
+            return new ResponseEntity<>( "The event was deleted successfully!", HttpStatus.OK) ;
         }
 
-        throw new RecordNotFoundException("Event was not deleted");
+        return new ResponseEntity<>( "This is not your event to delete ", HttpStatus.UNAUTHORIZED);
     }
 }

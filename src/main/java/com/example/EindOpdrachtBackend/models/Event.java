@@ -33,6 +33,7 @@ public class Event {
     private Double latCoordinate;
     private Double longCoordinate;
     private String entryPrice;
+    @Column(columnDefinition = "TEXT")
     private String textDescription;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date startDate;
