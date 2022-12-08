@@ -14,7 +14,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -72,7 +74,7 @@ class UserControllerTest {
     @Test
     @WithMockUser(username="jadey", roles="ORGANIZER")
     @DisplayName("Should create, save and return user")
-    void shouldCreateSaveAndReturnUser() throws  Exception {
+    void shouldCreateAndSaveUser() throws  Exception {
 
         Role role = new Role(RoleOption.ORGANIZER, null);
         List<Event> favoriteEvents = new ArrayList<>();
@@ -86,16 +88,16 @@ class UserControllerTest {
 
         UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "");
 
-        Mockito.when(userService.createUser(userPostDto)).thenReturn(user.getUsername());
+        Mockito.when(userService.createUser(userPostDto)).thenReturn( new ResponseEntity<>("Account created successfully for: " + "jadey", HttpStatus.CREATED));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/user")
                 .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123",  "")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").exists());
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
     }
 
     public static String asJsonString(final Object obj) {

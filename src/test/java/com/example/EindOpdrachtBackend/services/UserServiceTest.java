@@ -22,6 +22,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -88,7 +90,7 @@ class UserServiceTest {
         Mockito.when(encoder.encode("123")).thenReturn("123");
         Mockito.when(roleRepos.findById(RoleOption.VISITOR)).thenReturn(or);
 
-        assertEquals(user.getUsername(), userService.createUser(userPostDto));
+        assertEquals(new ResponseEntity<>("Account created successfully for: " + "jadey", HttpStatus.CREATED), userService.createUser(userPostDto));
     }
 
     @Test

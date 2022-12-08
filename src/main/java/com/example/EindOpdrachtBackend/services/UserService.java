@@ -50,27 +50,35 @@ public class UserService {
         return (List<User>) userRepos.findAll();
     }
 
-    public String createUser(UserPostDto dto) {
+    public ResponseEntity<Object> createUser(UserPostDto dto) {
 
-        User newUser = new User();
+        Optional<User> requestedNewUser = userRepos.findById(dto.getUsername());
 
-        newUser.setUsername(dto.getUsername());
-        newUser.setPassword(encoder.encode(dto.getPassword()));
-        newUser.setOrganizationName(dto.getOrganizationName());
+        if(requestedNewUser.isPresent()) {
+
+            return new ResponseEntity<>("Username already exists" ,HttpStatus.ALREADY_REPORTED);}
+
+            User newUser = new User();
+
+            newUser.setUsername(dto.getUsername());
+            newUser.setPassword(encoder.encode(dto.getPassword()));
+            newUser.setOrganizationName(dto.getOrganizationName());
 
             Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
 
-            if(or.isPresent()){
+            if (or.isPresent()) {
 
                 Role newRole = or.get();
 
                 newUser.setRole(newRole);
             }
 
-        userRepos.save(newUser);
+            userRepos.save(newUser);
 
-        return newUser.getUsername();
-    }
+            return new ResponseEntity<>("Account created successfully for: " + newUser.getUsername(), HttpStatus.CREATED);
+        }
+
+
 
     public UserGetDto getUser(){
 

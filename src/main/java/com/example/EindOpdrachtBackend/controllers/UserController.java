@@ -31,9 +31,7 @@ public class UserController {
 
         } else {
 
-            String createdUserName = service.createUser(dto);
-
-            return new ResponseEntity<>( createdUserName + " was created successfully", HttpStatus.CREATED);
+           return service.createUser(dto);
         }
     }
 
@@ -85,7 +83,7 @@ public class UserController {
         return new ResponseEntity<>(service.deleteUser(username) + " was deleted successfully", HttpStatus.OK);
     }
 
-    @PutMapping("/user/myFavorites/remove/{eventId}")
+    @PatchMapping("/user/myFavorites/remove/{eventId}")
     public ResponseEntity<Object> removeFavoriteEvent(@PathVariable Long eventId) {
 
         return new ResponseEntity<>("Your favorite event with ID: " + service.removeFavorite(eventId) + " was successfully removed", HttpStatus.CREATED);
