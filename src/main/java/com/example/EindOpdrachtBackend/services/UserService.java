@@ -96,7 +96,7 @@ public class UserService {
 
     public Object getMyFavoriteEvents() {
 
-        User user = (User) idChecker.checkUsername(currentUser.authenticateUser().getUsername(), userRepos);
+        User user = currentUser.authenticateUser();
 
         return mapper.mapMyFavorites(user);
     }
@@ -151,7 +151,7 @@ public class UserService {
 
             userRepos.save(user);
 
-            return new ResponseEntity<> (event.getName() + " added your to favorites" ,HttpStatus.CREATED);
+            return new ResponseEntity<> (event.getName() + " added to your favorites" ,HttpStatus.CREATED);
         }
             return new ResponseEntity<>("This event is already in your favorite list!", HttpStatus.ALREADY_REPORTED);
 

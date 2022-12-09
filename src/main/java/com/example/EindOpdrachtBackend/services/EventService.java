@@ -7,12 +7,14 @@ import com.example.EindOpdrachtBackend.mappers.EventMapper;
 import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.models.User;
+import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -22,12 +24,15 @@ public class EventService {
     private final AuthService currentUser;
     private final IdChecker idChecker;
 
-    public EventService(EventRepository repos, EventMapper mapper, AuthService currentUser, IdChecker idChecker) {
+    private final UserRepository userRepos;
+
+    public EventService(EventRepository repos, EventMapper mapper, UserRepository userRepos, AuthService currentUser, IdChecker idChecker) {
 
         this.repos = repos;
         this.mapper = mapper;
         this.currentUser = currentUser;
         this.idChecker = idChecker;
+        this.userRepos = userRepos;
     }
 
     public List<EventGetDto> getAllEvents() {
@@ -86,6 +91,28 @@ public class EventService {
         Event event = (Event) idChecker.checkID(id, repos);
 
         if (user.equals(event.getOrganizer())) {
+
+            List<User> usersSavedFavorite = event.getVisitor();
+
+            if(usersSavedFavorite.size() > 0 ) {
+
+                for (int i = 0; i < usersSavedFavorite.size(); i++) {
+
+                    List<Event> userFavoriteList = usersSavedFavorite.get(i).getMyFavoriteEvents();
+
+                    for (int j = 0; j < userFavoriteList.size(); j++) {
+
+                        if (userFavoriteList.get(i).getId().equals(event.getId())) {
+
+                            userFavoriteList.remove(userFavoriteList.get(i));
+                        }
+
+                        usersSavedFavorite.get(i).setMyFavoriteEvents(userFavoriteList);
+
+                        userRepos.save(usersSavedFavorite.get(i));
+                    }
+                }
+            }
 
             this.repos.deleteById(event.getId());
 

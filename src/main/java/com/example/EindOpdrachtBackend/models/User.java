@@ -31,9 +31,12 @@ import java.util.*;
     @ToString.Exclude
     private Role role;
 
-    @ManyToMany(mappedBy = "visitor", cascade = CascadeType.REMOVE)
+    @ManyToMany
+    @JoinTable(
+            name = "favorite_saved_events",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-
     @JsonIgnore
     @ToString.Exclude
     private List<Event> myFavoriteEvents = new ArrayList<>();
