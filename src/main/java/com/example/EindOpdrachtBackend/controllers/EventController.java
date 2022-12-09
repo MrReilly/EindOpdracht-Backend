@@ -35,9 +35,7 @@ public class EventController {
 
         } else {
 
-            Event newEvent = service.createEvent(dto);
-
-            return new ResponseEntity<>(newEvent.getId(), HttpStatus.CREATED);
+            return service.createEvent(dto);
         }
     }
 

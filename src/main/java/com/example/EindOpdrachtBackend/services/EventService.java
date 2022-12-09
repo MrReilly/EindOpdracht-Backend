@@ -44,7 +44,7 @@ public class EventService {
         return allEventDtos;
     }
 
-    public Event createEvent(EventPostDto dto) {
+    public ResponseEntity<Object> createEvent(EventPostDto dto) {
 
         Event newEvent = mapper.toEntity(dto);
         User user = currentUser.authenticateUser();
@@ -55,7 +55,7 @@ public class EventService {
 
         repos.save(newEvent);
 
-        return newEvent;
+        return (new ResponseEntity<>("Event " + newEvent.getId() + " - " + newEvent.getName() + " was created successfully!", HttpStatus.CREATED));
     }
 
     public Object getEvent(Long id) {

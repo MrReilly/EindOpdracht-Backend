@@ -96,7 +96,7 @@ public class UserService {
 
     public Object getMyFavoriteEvents() {
 
-        User user = currentUser.authenticateUser();
+        User user = (User) idChecker.checkUsername(currentUser.authenticateUser().getUsername(), userRepos);
 
         return mapper.mapMyFavorites(user);
     }

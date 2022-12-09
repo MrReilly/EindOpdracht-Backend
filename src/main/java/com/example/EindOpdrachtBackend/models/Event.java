@@ -54,7 +54,11 @@ public class Event {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Review> reviews = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "myFavoriteEvents")
+    @ManyToMany
+    @JoinTable(
+            name = "favorite_saved_events",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @ToString.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<User> visitor = new ArrayList<>();

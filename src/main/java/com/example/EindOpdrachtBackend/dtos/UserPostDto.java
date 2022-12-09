@@ -17,12 +17,12 @@ public class UserPostDto {
         @ValueOfRoleEnum(enumClass = RoleOption.class)
         private String role;
         @NotNull
-        @Size(max = 30)
+        @Size(max = 20)
         private String username;
         @NotNull
-        @Size(max = 30)
+        @Size(max = 20)
         private String password;
-        @Size(max = 30)
+        @Size(max = 20)
         private String organizationName;
     }
 
