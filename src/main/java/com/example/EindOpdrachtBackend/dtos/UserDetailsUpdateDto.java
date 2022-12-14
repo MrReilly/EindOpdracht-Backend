@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,6 +24,12 @@ public class UserDetailsUpdateDto {
     private String organizationName;
     @Size(max = 30)
     private String password;
+    @Min(value = -90)
+    @Max(value = 90)
+    private Double defaultLatCoordinate;
+    @Min(value = -180)
+    @Max(value = 180)
+    private Double defaultLongCoordinate;
 
 }
 

@@ -63,6 +63,8 @@ public class UserService {
             newUser.setUsername(dto.getUsername());
             newUser.setPassword(encoder.encode(dto.getPassword()));
             newUser.setOrganizationName(dto.getOrganizationName());
+            newUser.setDefaultLatCoordinate(dto.getDefaultLatCoordinate());
+            newUser.setDefaultLongCoordinate(dto.getDefaultLongCoordinate());
 
             Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
 

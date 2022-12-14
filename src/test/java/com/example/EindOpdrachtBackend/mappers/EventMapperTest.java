@@ -49,7 +49,7 @@ class EventMapperTest {
         List<Review> fullListReviews = new ArrayList<>();
         List<Review> censoredlistReviews = new ArrayList<>();
 
-        User user = new User("thomas", "123", "bv",null, null, null, null);
+        User user = new User("thomas", "123", "bv",null, null, null, null, null, null);
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, fullListReviews, null);
 
         Review fullReview = new Review(1L, "thomas", "I liked it!", DateConverter.parseDate("2022-11-30"), 2, event, user);

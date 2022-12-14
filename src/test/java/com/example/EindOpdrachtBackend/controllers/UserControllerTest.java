@@ -82,17 +82,17 @@ class UserControllerTest {
         List<Event> myEvents = new ArrayList<>();
         Collection<User> users = new ArrayList<>();
 
-        User user = new User("jadey", "123", "bv",role, favoriteEvents, reviewList, myEvents);
+        User user = new User("jadey", "123", "bv",null, null, role, favoriteEvents, reviewList, myEvents);
         users.add(user);
         role.setUsers(users);
 
-        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "");
+        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "", null, null);
 
         Mockito.when(userService.createUser(userPostDto)).thenReturn( new ResponseEntity<>("Account created successfully for: " + "jadey", HttpStatus.CREATED));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/user")
-                .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123",  "")))
+                .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123",  "", null, null)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

@@ -70,6 +70,8 @@ public class UserMapper {
          profileDetails.setUsername(user.getUsername());
          profileDetails.setOrganizationName(user.getOrganizationName());
          profileDetails.setRole(user.getRole().getRolename().toString());
+         profileDetails.setDefaultLatCoordinate(user.getDefaultLatCoordinate());
+         profileDetails.setDefaultLongCoordinate(user.getDefaultLongCoordinate());
 
         return profileDetails;
     }

@@ -24,6 +24,8 @@ import java.util.*;
     private String username;
     private String password;
     private String organizationName;
+    private Double defaultLatCoordinate;
+    private Double defaultLongCoordinate;
 
     @ManyToOne
     @JsonIgnore

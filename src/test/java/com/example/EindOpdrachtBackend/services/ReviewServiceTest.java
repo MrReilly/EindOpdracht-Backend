@@ -74,7 +74,7 @@ class ReviewServiceTest {
 
         Role role = new Role(RoleOption.ORGANIZER, null);
 
-        User user = new User("jadey", "123", "bv", role, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, role, null, null, null);
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
 
@@ -137,7 +137,7 @@ class ReviewServiceTest {
         List<Review> eventReviewList = new ArrayList<>();
         List<Review> userReviewList = new ArrayList<>();
 
-        User user = new User("jadey", "123", "bv", role, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, role, null, null, null);
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
 
