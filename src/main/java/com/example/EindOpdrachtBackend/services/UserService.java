@@ -18,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,35 +52,35 @@ public class UserService {
 
         Optional<User> requestedNewUser = userRepos.findById(dto.getUsername());
 
-        if(requestedNewUser.isPresent()) {
+        if (requestedNewUser.isPresent()) {
 
-            return new ResponseEntity<>("Username already exists" ,HttpStatus.ALREADY_REPORTED);}
-
-            User newUser = new User();
-
-            newUser.setUsername(dto.getUsername());
-            newUser.setPassword(encoder.encode(dto.getPassword()));
-            newUser.setOrganizationName(dto.getOrganizationName());
-            newUser.setDefaultLatCoordinate(dto.getDefaultLatCoordinate());
-            newUser.setDefaultLongCoordinate(dto.getDefaultLongCoordinate());
-
-            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
-
-            if (or.isPresent()) {
-
-                Role newRole = or.get();
-
-                newUser.setRole(newRole);
-            }
-
-            userRepos.save(newUser);
-
-            return new ResponseEntity<>("Account created successfully for: " + newUser.getUsername(), HttpStatus.CREATED);
+            return new ResponseEntity<>("Username already exists", HttpStatus.ALREADY_REPORTED);
         }
 
+        User newUser = new User();
 
+        newUser.setUsername(dto.getUsername());
+        newUser.setPassword(encoder.encode(dto.getPassword()));
+        newUser.setOrganizationName(dto.getOrganizationName());
+        newUser.setDefaultLatCoordinate(dto.getDefaultLatCoordinate());
+        newUser.setDefaultLongCoordinate(dto.getDefaultLongCoordinate());
+        newUser.setDefaultLocationName(dto.getDefaultLocationName());
 
-    public UserGetDto getUser(){
+        Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
+
+        if (or.isPresent()) {
+
+            Role newRole = or.get();
+
+            newUser.setRole(newRole);
+        }
+
+        userRepos.save(newUser);
+
+        return new ResponseEntity<>("Account created successfully for: " + newUser.getUsername(), HttpStatus.CREATED);
+    }
+
+    public UserGetDto getUser() {
 
         User user = currentUser.authenticateUser();
 
@@ -93,8 +91,8 @@ public class UserService {
 
         User user = currentUser.authenticateUser();
 
-            return mapper.mapUserProfile(user);
-        }
+        return mapper.mapUserProfile(user);
+    }
 
     public Object getMyFavoriteEvents() {
 
@@ -114,30 +112,43 @@ public class UserService {
 
         User user = currentUser.authenticateUser();
 
-        user.setOrganizationName(dto.getOrganizationName());
-
-        if(dto.getPassword() == null){
+        if (dto.getOrganizationName() == null) {
             assert true;
+        } else {
+            user.setOrganizationName(dto.getOrganizationName());
         }
-        else {
-        user.setPassword(encoder.encode(dto.getPassword()));
+
+        if (dto.getDefaultLocationName() == null) {
+            assert true;
+        } else {
+            user.setDefaultLocationName(dto.getDefaultLocationName());
+            user.setDefaultLatCoordinate(dto.getDefaultLatCoordinate());
+            user.setDefaultLongCoordinate(dto.getDefaultLongCoordinate());
         }
 
-            Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
+        user.setDefaultLocationName(dto.getDefaultLocationName());
 
-            if(or.isPresent()) {
+        if (dto.getPassword() == null) {
+            assert true;
+        } else {
+            user.setPassword(encoder.encode(dto.getPassword()));
+        }
 
-                Role newRole = or.get();
+        Optional<Role> or = roleRepos.findById(RoleOption.valueOf(dto.getRole()));
 
-                user.setRole(newRole);
-            }
+        if (or.isPresent()) {
 
-                User saved = userRepos.save(user);
+            Role newRole = or.get();
 
-                return saved.getUsername();
-            }
+            user.setRole(newRole);
+        }
 
-    public ResponseEntity<Object> saveFavoriteEvent (Long eventId) {
+        User saved = userRepos.save(user);
+
+        return saved.getUsername();
+    }
+
+    public ResponseEntity<Object> saveFavoriteEvent(Long eventId) {
 
         User user = currentUser.authenticateUser();
 
@@ -153,42 +164,27 @@ public class UserService {
 
             userRepos.save(user);
 
-            return new ResponseEntity<> (event.getName() + " added to your favorites" ,HttpStatus.CREATED);
+            return new ResponseEntity<>(event.getName() + " added to your favorites", HttpStatus.CREATED);
         }
-            return new ResponseEntity<>("This event is already in your favorite list!", HttpStatus.ALREADY_REPORTED);
+        return new ResponseEntity<>("This event is already in your favorite list!", HttpStatus.ALREADY_REPORTED);
 
     }
 
-    public String deleteUser(String username) {
-
-        User cUser = currentUser.authenticateUser();
-
-        User toDeleteUser = (User)idChecker.checkUsername(username, userRepos);
-
-        if(cUser.equals(toDeleteUser)) {
-
-            this.userRepos.deleteById(cUser.getUsername());
-            return cUser.getUsername();
-        }
-
-        throw new IllegalArgumentException("you are not allowed to delete this user!");
-    }
-
-    public Long removeFavorite(Long id){
+    public Long removeFavorite(Long id) {
 
         User user = currentUser.authenticateUser();
 
-        Event eventToRemove = (Event)idChecker.checkID(id,eventRepos);
+        Event eventToRemove = (Event) idChecker.checkID(id, eventRepos);
 
         List<Event> userListToUpdate = user.getMyFavoriteEvents();
 
-            userListToUpdate.removeIf(event -> event.getId().equals(eventToRemove.getId()));
+        userListToUpdate.removeIf(event -> event.getId().equals(eventToRemove.getId()));
 
-            user.setMyFavoriteEvents(userListToUpdate);
+        user.setMyFavoriteEvents(userListToUpdate);
 
-            userRepos.save(user);
+        userRepos.save(user);
 
-            return id;
+        return id;
     }
 
 }

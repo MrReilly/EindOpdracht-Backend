@@ -7,24 +7,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class IdChecker {
 
-    public Object checkID(Long id, CrudRepository<?,Long> repos) {
+    public Object checkID(Long id, CrudRepository<?, Long> repos) {
 
-        if (repos.findById(id).isPresent()){
+        if (repos.findById(id).isPresent()) {
             return repos.findById(id).get();
-        }
-
-        else {
+        } else {
             throw new RecordNotFoundException("ID not found");
         }
     }
 
-    public Object checkUsername(String id, CrudRepository<?,String> repos) {
+    public Object checkUsername(String id, CrudRepository<?, String> repos) {
 
-        if (repos.findById(id).isPresent()){
+        if (repos.findById(id).isPresent()) {
             return repos.findById(id).get();
-        }
-
-        else {
+        } else {
             throw new RecordNotFoundException("User not found");
         }
     }

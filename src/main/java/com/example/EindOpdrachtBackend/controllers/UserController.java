@@ -31,7 +31,7 @@ public class UserController {
 
         } else {
 
-           return service.createUser(dto);
+            return service.createUser(dto);
         }
     }
 
@@ -44,7 +44,7 @@ public class UserController {
     public ResponseEntity<Object> getUser() {
 
         return new ResponseEntity<>(service.getUserProfile(), HttpStatus.OK);
-        }
+    }
 
     @GetMapping("/user/myFavorites")
     public ResponseEntity<Object> getMyFavorites() {
@@ -67,21 +67,16 @@ public class UserController {
 
         } else {
 
-            return new ResponseEntity<>( "User " + service.updateUser(dto) + " was updated successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("User " + service.updateUser(dto) + " was updated successfully", HttpStatus.CREATED);
         }
     }
 
     @PatchMapping("/user/myFavorites/add/{eventId}")
     public ResponseEntity<Object> saveFavoriteEvent(@PathVariable Long eventId) {
 
-           return service.saveFavoriteEvent(eventId);
-        }
-
-    @DeleteMapping("/user/{username}")
-    public ResponseEntity<Object> deleteUser(@PathVariable String username) {
-
-        return new ResponseEntity<>(service.deleteUser(username) + " was deleted successfully", HttpStatus.OK);
+        return service.saveFavoriteEvent(eventId);
     }
+
 
     @PatchMapping("/user/myFavorites/remove/{eventId}")
     public ResponseEntity<Object> removeFavoriteEvent(@PathVariable Long eventId) {

@@ -16,8 +16,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = ValueOfCategoryEnumValidator.class)
 public @interface ValueOfCategoryEnum {
     Class<? extends Enum<?>> enumClass();
+
     String message() default "must be one of: \n\n[FESTIVAL, ART, CONCERT, KIDS, FAIR, NATURE, MARKET, THEATER, CONFERENCE, CIRCUS, SPORTS, OTHER]";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
 

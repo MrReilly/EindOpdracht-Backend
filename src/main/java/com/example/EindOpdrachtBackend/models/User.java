@@ -2,7 +2,6 @@ package com.example.EindOpdrachtBackend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -16,8 +15,8 @@ import java.util.*;
 @ToString
 
 @Entity
-@Table(name="users")
-    public class User {
+@Table(name = "users")
+public class User {
 
     @Id
     @Column(name = "user_id")
@@ -26,10 +25,11 @@ import java.util.*;
     private String organizationName;
     private Double defaultLatCoordinate;
     private Double defaultLongCoordinate;
+    private String defaultLocationName;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="role")
+    @JoinColumn(name = "role")
     @ToString.Exclude
     private Role role;
 
@@ -59,13 +59,14 @@ import java.util.*;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (!(o instanceof User)) return false;
         User user = (User) o;
-        return username != null && Objects.equals(username, user.username);
+        return Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(organizationName, user.organizationName) && Objects.equals(defaultLatCoordinate, user.defaultLatCoordinate) && Objects.equals(defaultLongCoordinate, user.defaultLongCoordinate) && Objects.equals(defaultLocationName, user.defaultLocationName) && Objects.equals(role, user.role) && Objects.equals(myFavoriteEvents, user.myFavoriteEvents) && Objects.equals(myReviews, user.myReviews) && Objects.equals(myEvents, user.myEvents);
     }
+
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(username, password, organizationName, defaultLatCoordinate, defaultLongCoordinate, defaultLocationName, role, myFavoriteEvents, myReviews, myEvents);
     }
 }
 

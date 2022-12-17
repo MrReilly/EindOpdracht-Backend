@@ -17,8 +17,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface ValueOfRoleEnum {
 
     Class<? extends Enum<?>> enumClass();
+
     String message() default "must be one of: \n\n[ORGANIZER, VISITOR, ADMIN]";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 
 }

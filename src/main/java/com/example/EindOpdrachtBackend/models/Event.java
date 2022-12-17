@@ -16,14 +16,14 @@ import java.util.*;
 @ToString
 
 @Entity
-@Table(name="events")
+@Table(name = "events")
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name="category")
+    @JoinColumn(name = "category")
     @Enumerated(value = EnumType.STRING)
     private Category category;
     private String organizationName;
@@ -35,12 +35,12 @@ public class Event {
     private String entryPrice;
     @Column(columnDefinition = "TEXT")
     private String textDescription;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     private Integer starRating;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private ImageData imageData;
     @ManyToOne

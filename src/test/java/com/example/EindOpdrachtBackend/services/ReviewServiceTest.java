@@ -2,7 +2,6 @@ package com.example.EindOpdrachtBackend.services;
 
 import com.example.EindOpdrachtBackend.dtos.ReviewGetDto;
 import com.example.EindOpdrachtBackend.dtos.ReviewPostDto;
-import com.example.EindOpdrachtBackend.mappers.EventMapper;
 import com.example.EindOpdrachtBackend.mappers.ReviewMapper;
 import com.example.EindOpdrachtBackend.models.*;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
@@ -19,12 +18,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,7 +49,7 @@ class ReviewServiceTest {
     ArgumentCaptor<Review> reviewArgumentCaptor;
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return a list of all Reviews")
     void shouldReturnAllReviews() {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
@@ -65,7 +62,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should create a review")
     void shouldCreateReview() {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
@@ -74,7 +71,7 @@ class ReviewServiceTest {
 
         Role role = new Role(RoleOption.ORGANIZER, null);
 
-        User user = new User("jadey", "123", "bv", null, null, role, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, role, null, null, null);
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
 
@@ -94,7 +91,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return a List of reviews")
     void shouldReturnListOfReviews() {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
@@ -105,7 +102,7 @@ class ReviewServiceTest {
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", null, null, 2, null, null, reviewList, null);
 
-        Review review = new Review(1L, "thomas", "It was nice!", DateConverter.parseDate("2022-11-30"), 1, event,null) ;
+        Review review = new Review(1L, "thomas", "It was nice!", DateConverter.parseDate("2022-11-30"), 1, event, null);
         reviewList.add(review);
 
         event.setReviews(reviewList);
@@ -125,7 +122,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should delete a review")
     void shouldDeleteReview() {
         ReviewService reviewService = new ReviewService(reviewRepos, eventRepos, userRepos, mapper, currentUser, idChecker);
@@ -137,7 +134,7 @@ class ReviewServiceTest {
         List<Review> eventReviewList = new ArrayList<>();
         List<Review> userReviewList = new ArrayList<>();
 
-        User user = new User("jadey", "123", "bv", null, null, role, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, role, null, null, null);
 
         Event event = new Event(1L, category, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
 

@@ -1,14 +1,11 @@
 package com.example.EindOpdrachtBackend.mappers;
 
-import com.example.EindOpdrachtBackend.models.Event;
 import com.example.EindOpdrachtBackend.models.ImageData;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.Servlet;
 import java.io.IOException;
 import java.util.Objects;
 

@@ -3,8 +3,6 @@ package com.example.EindOpdrachtBackend.dtos;
 import com.example.EindOpdrachtBackend.models.CategoryOption;
 import com.example.EindOpdrachtBackend.validation.ValueOfCategoryEnum;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 

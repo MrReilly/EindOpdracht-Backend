@@ -20,7 +20,7 @@ public class ValueOfCategoryEnumValidator implements ConstraintValidator<ValueOf
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
 
 
-        if (value== null) {
+        if (value == null) {
             return true;
         }
 

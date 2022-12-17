@@ -1,14 +1,11 @@
 package com.example.EindOpdrachtBackend.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Objects;
-
 
 @Getter
 @Setter
@@ -32,7 +29,6 @@ public class ImageData {
     @Lob
     @Column(name = "image")
     private byte[] image;
-
 
 
     @Override

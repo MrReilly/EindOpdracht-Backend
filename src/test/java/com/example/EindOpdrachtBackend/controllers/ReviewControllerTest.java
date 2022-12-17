@@ -3,10 +3,8 @@ package com.example.EindOpdrachtBackend.controllers;
 import com.example.EindOpdrachtBackend.dtos.ReviewGetDto;
 import com.example.EindOpdrachtBackend.models.Review;
 import com.example.EindOpdrachtBackend.security.JwtService;
-import com.example.EindOpdrachtBackend.services.EventService;
 import com.example.EindOpdrachtBackend.services.ReviewService;
 import com.example.EindOpdrachtBackend.util.DateConverter;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,15 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(ReviewController.class)
 class ReviewControllerTest {
@@ -40,7 +34,7 @@ class ReviewControllerTest {
     ReviewService reviewService;
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return All reviews")
     void shouldReturnAllReviews() throws Exception {
 
@@ -56,9 +50,9 @@ class ReviewControllerTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should return reviewDto")
-    void shouldReturnReviewDtoList() throws  Exception{
+    void shouldReturnReviewDtoList() throws Exception {
 
         ReviewGetDto reviewGetDto = new ReviewGetDto(1L, 1L, "jadey", "It was nice!", DateConverter.parseDate("2023-01-02"), 1);
         List<ReviewGetDto> reviewList = new ArrayList<>();

@@ -9,18 +9,18 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class EindOpdrachtBackendApplication {
 
-	@Bean
-	public ModelMapper modelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
 
-		modelMapper.getConfiguration()
-				.setSkipNullEnabled(true);
+        modelMapper.getConfiguration()
+                .setSkipNullEnabled(true);
 
-		return modelMapper;
-	}
+        return modelMapper;
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(EindOpdrachtBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EindOpdrachtBackendApplication.class, args);
+    }
 
 }

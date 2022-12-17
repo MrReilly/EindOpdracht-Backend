@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.controllers;
 
-import com.example.EindOpdrachtBackend.dtos.ImageGetDto;
 import com.example.EindOpdrachtBackend.models.ImageData;
 import com.example.EindOpdrachtBackend.services.ImageDataService;
 import org.springframework.core.io.ByteArrayResource;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.io.IOException;

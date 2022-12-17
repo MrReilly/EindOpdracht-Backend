@@ -34,23 +34,23 @@ class CategoryControllerTest {
     CategoryService categoryService;
 
     @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should return a list of Events in the specified category")
-    void shouldReturnListOfEventsInCategory() throws Exception{
+    void shouldReturnListOfEventsInCategory() throws Exception {
 
-            List<EventGetDto> events = new ArrayList<>();
-            CategoryGetDto dto = new CategoryGetDto(events);
+        List<EventGetDto> events = new ArrayList<>();
+        CategoryGetDto dto = new CategoryGetDto(events);
 
-            Mockito.when(categoryService.getCategory(CategoryOption.valueOf("FAIR"))).thenReturn(dto);
+        Mockito.when(categoryService.getCategory(CategoryOption.valueOf("FAIR"))).thenReturn(dto);
 
-            this.mockMvc
-                    .perform(MockMvcRequestBuilders.get("/category/FAIR"))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().isFound())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.events", is(events)));
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/category/FAIR"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.events", is(events)));
 
 
-        }
     }
+}
 
 

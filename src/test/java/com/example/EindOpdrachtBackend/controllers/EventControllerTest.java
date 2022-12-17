@@ -1,7 +1,6 @@
 package com.example.EindOpdrachtBackend.controllers;
 
 import com.example.EindOpdrachtBackend.dtos.EventGetDto;
-import com.example.EindOpdrachtBackend.models.*;
 import com.example.EindOpdrachtBackend.security.JwtService;
 import com.example.EindOpdrachtBackend.services.EventService;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,12 +44,12 @@ class EventControllerTest {
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        }
+    }
 
     @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should return all Events")
-    void shouldReturnAllEvent() throws Exception{
+    void shouldReturnAllEvent() throws Exception {
 
         List<EventGetDto> events = new ArrayList<>();
 
@@ -64,11 +63,11 @@ class EventControllerTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should return EventDto")
     void shouldReturnEventDto() throws Exception {
 
-        EventGetDto dto = new EventGetDto(1L, null,  "bv", "Kermis", "Nijmegen", "Burchtstraat", 50.0000, 5.0000,  "5 euro", "gezellige kermis", null, null, 2, null, null);
+        EventGetDto dto = new EventGetDto(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat", 50.0000, 5.0000, "5 euro", "gezellige kermis", null, null, 2, null, null);
 
         Mockito.when(eventService.getEvent(1L)).thenReturn(dto);
 
@@ -89,13 +88,12 @@ class EventControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should delete Event and return success message")
-    void shouldDeleteEvent() throws Exception{
+    void shouldDeleteEvent() throws Exception {
 
 
-
-        Mockito.when(eventService.deleteEvent(1L)).thenReturn(new ResponseEntity<>( "The event was deleted successfully!", HttpStatus.OK));
+        Mockito.when(eventService.deleteEvent(1L)).thenReturn(new ResponseEntity<>("The event was deleted successfully!", HttpStatus.OK));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.delete("/event/1"))

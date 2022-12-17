@@ -15,7 +15,7 @@ import java.util.Objects;
 @ToString
 
 @Entity
-@Table(name="reviews")
+@Table(name = "reviews")
 public class Review {
 
     @Id

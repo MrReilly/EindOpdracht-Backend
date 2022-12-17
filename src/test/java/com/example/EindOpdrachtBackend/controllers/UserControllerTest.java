@@ -6,7 +6,6 @@ import com.example.EindOpdrachtBackend.repositories.RoleRepository;
 import com.example.EindOpdrachtBackend.security.JwtService;
 import com.example.EindOpdrachtBackend.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,9 +54,9 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should return all Users")
-    void shouldReturnAllUsers() throws Exception{
+    void shouldReturnAllUsers() throws Exception {
 
         List<User> users = new ArrayList<>();
 
@@ -72,9 +71,9 @@ class UserControllerTest {
 
 
     @Test
-    @WithMockUser(username="jadey", roles="ORGANIZER")
+    @WithMockUser(username = "jadey", roles = "ORGANIZER")
     @DisplayName("Should create, save and return user")
-    void shouldCreateAndSaveUser() throws  Exception {
+    void shouldCreateAndSaveUser() throws Exception {
 
         Role role = new Role(RoleOption.ORGANIZER, null);
         List<Event> favoriteEvents = new ArrayList<>();
@@ -82,19 +81,19 @@ class UserControllerTest {
         List<Event> myEvents = new ArrayList<>();
         Collection<User> users = new ArrayList<>();
 
-        User user = new User("jadey", "123", "bv",null, null, role, favoriteEvents, reviewList, myEvents);
+        User user = new User("jadey", "123", "bv", 5.1, 51.8, "Nijmegen", role, favoriteEvents, reviewList, myEvents);
         users.add(user);
         role.setUsers(users);
 
-        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "", null, null);
+        UserPostDto userPostDto = new UserPostDto("ORGANIZER", "jadey", "123", "", 5.1, 51.8, "Nijmegen");
 
-        Mockito.when(userService.createUser(userPostDto)).thenReturn( new ResponseEntity<>("Account created successfully for: " + "jadey", HttpStatus.CREATED));
+        Mockito.when(userService.createUser(userPostDto)).thenReturn(new ResponseEntity<>("Account created successfully for: " + "jadey", HttpStatus.CREATED));
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/user")
-                .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123",  "", null, null)))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .content(asJsonString(new UserPostDto("ORGANIZER", "jadey", "123", "", 5.1, 51.8, "Nijmegen")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 

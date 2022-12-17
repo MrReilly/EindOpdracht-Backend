@@ -11,15 +11,14 @@ import java.util.List;
 
 @Component
 public class CategoryMapper {
-
     EventMapper eventMapper;
 
-   CategoryMapper(EventMapper eventMapper){
+    CategoryMapper(EventMapper eventMapper) {
 
         this.eventMapper = eventMapper;
     }
 
-    public CategoryGetDto CategoryGetDto(Category category){
+    public CategoryGetDto CategoryGetDto(Category category) {
 
         CategoryGetDto dto = new CategoryGetDto();
 

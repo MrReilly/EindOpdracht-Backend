@@ -47,24 +47,24 @@ public class ReviewService {
 
         Review newReview = mapper.toEntity(dto);
         User user = currentUser.authenticateUser();
-        Event reviewedEvent = (Event)idChecker.checkID(eventId, eventRepos);
+        Event reviewedEvent = (Event) idChecker.checkID(eventId, eventRepos);
 
-        for (int i = 0; i < reviewedEvent.getReviews().size() ; i++) {
+        for (int i = 0; i < reviewedEvent.getReviews().size(); i++) {
 
-           if(reviewedEvent.getReviews().get(i).getAuthorName().equals(user.getUsername())){
+            if (reviewedEvent.getReviews().get(i).getAuthorName().equals(user.getUsername())) {
 
-               return new ResponseEntity<>("You have already reviewed this event" , HttpStatus.ALREADY_REPORTED);
+                return new ResponseEntity<>("You have already reviewed this event", HttpStatus.ALREADY_REPORTED);
             }
         }
 
-            newReview.setEvent(reviewedEvent);
-            newReview.setAuthor(user);
-            newReview.setAuthorName(user.getUsername());
+        newReview.setEvent(reviewedEvent);
+        newReview.setAuthor(user);
+        newReview.setAuthorName(user.getUsername());
 
-            reviewRepos.save(newReview);
+        reviewRepos.save(newReview);
 
-            return new ResponseEntity<>("Review successfully posted!" , HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>("Review successfully posted!", HttpStatus.CREATED);
+    }
 
     public List<ReviewGetDto> getReview(Long id) {
 
@@ -121,5 +121,5 @@ public class ReviewService {
 
         throw new RecordNotFoundException("The review was not deleted");
     }
-    }
+}
 

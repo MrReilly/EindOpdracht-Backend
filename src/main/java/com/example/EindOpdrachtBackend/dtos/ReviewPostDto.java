@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-import com.example.EindOpdrachtBackend.validation.ValueOfCategoryEnum;
 import lombok.*;
 
 import javax.validation.constraints.*;

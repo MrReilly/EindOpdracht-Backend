@@ -14,6 +14,7 @@ import java.util.Objects;
 public class CategoryGetDto {
 
     private List<EventGetDto> events;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -21,6 +22,7 @@ public class CategoryGetDto {
         CategoryGetDto that = (CategoryGetDto) o;
         return Objects.equals(events, that.events);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(events);

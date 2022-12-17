@@ -47,8 +47,8 @@ class UserMapperTest {
         String stringRole = role.toString();
 
 
-        User user = new User("thomas", "123", "bv",null, null, role, null, null, null);
-        UserGetDto userGetDto = new UserGetDto("thomas",  "ok bv", stringRole ,null, null,  null, null, null);
+        User user = new User("thomas", "123", "bv", null, null, null, role, null, null, null);
+        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null, null, null, stringRole, null, null, null);
 
         Mockito.when(modelMapper.map(user, UserGetDto.class)).thenReturn(userGetDto);
 
@@ -65,8 +65,8 @@ class UserMapperTest {
         Role role = new Role(RoleOption.ORGANIZER, null);
         String stringRole = role.toString();
 
-        User user = new User("thomas", "123", "bv", null, null, role, null, null, null);
-        UserGetDto profileDetails = new UserGetDto("thomas",  "ok bv",stringRole, null,null  , null, null, null);
+        User user = new User("thomas", "123", "bv", null, null, null, role, null, null, null);
+        UserGetDto profileDetails = new UserGetDto("thomas", "ok bv", null, null, null, stringRole, null, null, null);
 
         Mockito.when(modelMapper.map(user, UserGetDto.class)).thenReturn(profileDetails);
 
@@ -86,7 +86,7 @@ class UserMapperTest {
         List<Object> objectFavoriteEvents = new ArrayList<>();
 
         UserFavoriteGetDto userFavoriteGetDto = new UserFavoriteGetDto(objectFavoriteEvents);
-        User user = new User("thomas", "123", "bv", null, null, role, favoriteEvents, null, null);
+        User user = new User("thomas", "123", "bv", null, null, null, role, favoriteEvents, null, null);
 
 
         assertEquals(userFavoriteGetDto, userMapper.mapMyFavorites(user));
@@ -105,7 +105,7 @@ class UserMapperTest {
         List<Object> objectMyEvents = new ArrayList<>();
 
         UserMyEventGetDto userMyEventGetDto = new UserMyEventGetDto(objectMyEvents);
-        User user = new User("thomas", "123", "bv", null, null, role, null, null, myEvents);
+        User user = new User("thomas", "123", "bv", null, null, null, role, null, null, myEvents);
 
 
         assertEquals(userMyEventGetDto, userMapper.mapMyEvents(user));

@@ -5,8 +5,10 @@ import com.example.EindOpdrachtBackend.dtos.EventPostDto;
 import com.example.EindOpdrachtBackend.exception.RecordNotFoundException;
 import com.example.EindOpdrachtBackend.mappers.EventMapper;
 import com.example.EindOpdrachtBackend.models.Event;
+import com.example.EindOpdrachtBackend.models.ImageData;
 import com.example.EindOpdrachtBackend.repositories.EventRepository;
 import com.example.EindOpdrachtBackend.models.User;
+import com.example.EindOpdrachtBackend.repositories.ImageRepository;
 import com.example.EindOpdrachtBackend.repositories.UserRepository;
 import com.example.EindOpdrachtBackend.validation.IdChecker;
 import org.springframework.http.HttpStatus;
@@ -23,23 +25,24 @@ public class EventService {
     private final EventMapper mapper;
     private final AuthService currentUser;
     private final IdChecker idChecker;
-
+    private final ImageRepository imageRepos;
     private final UserRepository userRepos;
 
-    public EventService(EventRepository repos, EventMapper mapper, UserRepository userRepos, AuthService currentUser, IdChecker idChecker) {
+    public EventService(EventRepository repos, EventMapper mapper, UserRepository userRepos, ImageRepository imageRepos, AuthService currentUser, IdChecker idChecker) {
 
         this.repos = repos;
         this.mapper = mapper;
         this.currentUser = currentUser;
         this.idChecker = idChecker;
         this.userRepos = userRepos;
+        this.imageRepos = imageRepos;
     }
 
     public List<EventGetDto> getAllEvents() {
 
-         List<Event> allEvents = (List<Event>) repos.findAll();
+        List<Event> allEvents = (List<Event>) repos.findAll();
 
-         List<EventGetDto> allEventDtos = new ArrayList<>();
+        List<EventGetDto> allEventDtos = new ArrayList<>();
 
         for (Event event : allEvents) {
 
@@ -65,7 +68,7 @@ public class EventService {
 
     public Object getEvent(Long id) {
 
-        return mapper.toDto((Event)idChecker.checkID(id, repos));
+        return mapper.toDto((Event) idChecker.checkID(id, repos));
     }
 
     public String updateEvent(EventPostDto dto, Long id) {
@@ -73,7 +76,7 @@ public class EventService {
         User user = currentUser.authenticateUser();
         Event event = (Event) idChecker.checkID(id, repos);
 
-        if (user.equals(event.getOrganizer())) {
+        if (user.getUsername().equals(event.getOrganizer().getUsername())) {
 
             Event updated = mapper.updateEntity(dto, event);
 
@@ -82,7 +85,7 @@ public class EventService {
             return "The event was updated successfully!";
         }
 
-            throw new RecordNotFoundException("Event not updated");
+        throw new RecordNotFoundException("Event not updated");
     }
 
     public ResponseEntity<Object> deleteEvent(Long id) {
@@ -90,11 +93,18 @@ public class EventService {
         User user = currentUser.authenticateUser();
         Event event = (Event) idChecker.checkID(id, repos);
 
-        if (user.equals(event.getOrganizer())) {
+        if (user.getUsername().equals(event.getOrganizer().getUsername())) {
+
+            if (event.getImageData() == null) {
+                assert true;
+            } else {
+                ImageData image = (ImageData) idChecker.checkID(event.getImageData().getId(), imageRepos);
+                imageRepos.delete(image);
+            }
 
             List<User> usersSavedFavorite = event.getVisitor();
 
-            if(usersSavedFavorite.size() > 0 ) {
+            if (usersSavedFavorite.size() > 0) {
 
                 for (int i = 0; i < usersSavedFavorite.size(); i++) {
 
@@ -116,9 +126,9 @@ public class EventService {
 
             this.repos.deleteById(event.getId());
 
-            return new ResponseEntity<>( "The event was deleted successfully!", HttpStatus.OK) ;
+            return new ResponseEntity<>("The event was deleted successfully!", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>( "This is not your event to delete ", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("This is not your event to delete ", HttpStatus.UNAUTHORIZED);
     }
 }

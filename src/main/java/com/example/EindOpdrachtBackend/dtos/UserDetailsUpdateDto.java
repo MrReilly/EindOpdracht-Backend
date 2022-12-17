@@ -9,8 +9,8 @@ import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -30,6 +30,19 @@ public class UserDetailsUpdateDto {
     @Min(value = -180)
     @Max(value = 180)
     private Double defaultLongCoordinate;
+    private String defaultLocationName;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDetailsUpdateDto)) return false;
+        UserDetailsUpdateDto that = (UserDetailsUpdateDto) o;
+        return Objects.equals(role, that.role) && Objects.equals(organizationName, that.organizationName) && Objects.equals(password, that.password) && Objects.equals(defaultLatCoordinate, that.defaultLatCoordinate) && Objects.equals(defaultLongCoordinate, that.defaultLongCoordinate) && Objects.equals(defaultLocationName, that.defaultLocationName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(role, organizationName, password, defaultLatCoordinate, defaultLongCoordinate, defaultLocationName);
+    }
 }
 

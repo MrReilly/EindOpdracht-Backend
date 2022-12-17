@@ -1,9 +1,6 @@
 package com.example.EindOpdrachtBackend.security;
 
-import com.example.EindOpdrachtBackend.models.Event;
-import com.example.EindOpdrachtBackend.models.Role;
 import com.example.EindOpdrachtBackend.models.User;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

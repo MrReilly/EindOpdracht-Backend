@@ -1,21 +1,15 @@
 package com.example.EindOpdrachtBackend.controllers;
 
 import com.example.EindOpdrachtBackend.dtos.ReviewPostDto;
-import com.example.EindOpdrachtBackend.models.Review;
 import com.example.EindOpdrachtBackend.services.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 import static com.example.EindOpdrachtBackend.validation.StringBuilderValidation.stringBuilder;
-
 
 @RestController
 public class ReviewController {
@@ -49,8 +43,8 @@ public class ReviewController {
     @GetMapping("/review/{eventId}")
     public ResponseEntity<Object> getReview(@PathVariable Long eventId) {
 
-            return new ResponseEntity<>( service.getReview(eventId), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(service.getReview(eventId), HttpStatus.OK);
+    }
 
     @DeleteMapping("/review/{id}")
     public ResponseEntity<Object> deleteReview(@PathVariable Long id) {

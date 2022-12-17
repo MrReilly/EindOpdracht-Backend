@@ -16,17 +16,17 @@ public class ReviewMapper {
 
     public ReviewGetDto toDto(Review review) {
 
-       ReviewGetDto mapped = mapper.map(review, ReviewGetDto.class);
+        ReviewGetDto mapped = mapper.map(review, ReviewGetDto.class);
 
-       mapped.setEventId( review.getEvent().getId());
+        mapped.setEventId(review.getEvent().getId());
 
-       return mapped;
+        return mapped;
     }
 
     public Review toEntity(ReviewPostDto dto) {
         return mapper.map(dto, Review.class);
     }
 
-    }
+}
 
 

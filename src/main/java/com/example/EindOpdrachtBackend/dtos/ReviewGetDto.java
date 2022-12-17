@@ -1,7 +1,5 @@
 package com.example.EindOpdrachtBackend.dtos;
 
-import com.example.EindOpdrachtBackend.models.Event;
-import com.example.EindOpdrachtBackend.models.User;
 import lombok.*;
 
 import java.util.Date;

@@ -3,12 +3,9 @@ package com.example.EindOpdrachtBackend.dtos;
 import com.example.EindOpdrachtBackend.models.Category;
 import com.example.EindOpdrachtBackend.models.ImageData;
 import com.example.EindOpdrachtBackend.models.Review;
-import com.example.EindOpdrachtBackend.models.User;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;

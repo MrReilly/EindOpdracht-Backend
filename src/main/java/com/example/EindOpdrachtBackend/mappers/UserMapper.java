@@ -1,6 +1,5 @@
 package com.example.EindOpdrachtBackend.mappers;
 
-import com.example.EindOpdrachtBackend.dtos.UserDetailsUpdateDto;
 import com.example.EindOpdrachtBackend.dtos.UserFavoriteGetDto;
 import com.example.EindOpdrachtBackend.dtos.UserGetDto;
 import com.example.EindOpdrachtBackend.dtos.UserMyEventGetDto;
@@ -15,31 +14,31 @@ import java.util.List;
 
 @Component
 public class UserMapper {
-        private final ModelMapper mapper;
-        private final EventService eventService;
+    private final ModelMapper mapper;
+    private final EventService eventService;
 
-        public UserMapper(ModelMapper mapper, EventService eventService) {
-            this.mapper = mapper;
-            this.eventService = eventService;
+    public UserMapper(ModelMapper mapper, EventService eventService) {
+        this.mapper = mapper;
+        this.eventService = eventService;
+    }
+
+    public UserFavoriteGetDto mapMyFavorites(User user) {
+
+        UserFavoriteGetDto dto = new UserFavoriteGetDto();
+
+        List<Event> fullList = user.getMyFavoriteEvents();
+
+        List<Object> censoredList = new ArrayList<>();
+
+        for (Event event : fullList) {
+
+            censoredList.add(eventService.getEvent((event.getId())));
         }
 
-        public UserFavoriteGetDto mapMyFavorites(User user) {
+        dto.setMyFavoriteEvents(censoredList);
 
-           UserFavoriteGetDto dto = new UserFavoriteGetDto();
-
-           List<Event> fullList = user.getMyFavoriteEvents();
-
-           List<Object> censoredList = new ArrayList<>();
-
-            for (Event event : fullList) {
-
-               censoredList.add(eventService.getEvent((event.getId())));
-            }
-
-            dto.setMyFavoriteEvents(censoredList);
-
-            return dto;
-        }
+        return dto;
+    }
 
     public UserMyEventGetDto mapMyEvents(User user) {
 
@@ -58,23 +57,24 @@ public class UserMapper {
         return dto;
     }
 
-    public UserGetDto mapUser(User user){
+    public UserGetDto mapUser(User user) {
 
-            return mapper.map(user, UserGetDto.class);
+        return mapper.map(user, UserGetDto.class);
     }
 
     public UserGetDto mapUserProfile(User user) {
 
-         UserGetDto profileDetails = new UserGetDto();
+        UserGetDto profileDetails = new UserGetDto();
 
-         profileDetails.setUsername(user.getUsername());
-         profileDetails.setOrganizationName(user.getOrganizationName());
-         profileDetails.setRole(user.getRole().getRolename().toString());
-         profileDetails.setDefaultLatCoordinate(user.getDefaultLatCoordinate());
-         profileDetails.setDefaultLongCoordinate(user.getDefaultLongCoordinate());
+        profileDetails.setUsername(user.getUsername());
+        profileDetails.setOrganizationName(user.getOrganizationName());
+        profileDetails.setRole(user.getRole().getRolename().toString());
+        profileDetails.setDefaultLatCoordinate(user.getDefaultLatCoordinate());
+        profileDetails.setDefaultLongCoordinate(user.getDefaultLongCoordinate());
+        profileDetails.setDefaultLocationName(user.getDefaultLocationName());
 
         return profileDetails;
     }
 
-    }
+}
 

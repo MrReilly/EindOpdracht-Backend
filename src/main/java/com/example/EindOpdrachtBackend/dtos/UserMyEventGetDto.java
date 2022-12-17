@@ -13,6 +13,7 @@ import java.util.Objects;
 public class UserMyEventGetDto {
 
     private List<Object> myEvents;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -20,6 +21,7 @@ public class UserMyEventGetDto {
         UserMyEventGetDto that = (UserMyEventGetDto) o;
         return Objects.equals(myEvents, that.myEvents);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(myEvents);

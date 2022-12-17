@@ -59,7 +59,7 @@ class UserServiceTest {
     ArgumentCaptor<User> userArgumentCaptor;
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return a list of all Users")
     void shouldReturnAllUsers() {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
@@ -70,7 +70,7 @@ class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should create save and return User")
     void shouldCreateSaveAndReturnUser() {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
@@ -81,9 +81,9 @@ class UserServiceTest {
         Optional<Role> or = roleRepos.findById(RoleOption.VISITOR);
 
 
-        User user = new User("jadey", "123", "bv", null, null, role, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, role, null, null, null);
         users.add(user);
-        UserPostDto userPostDto = new UserPostDto("VISITOR", "jadey", "123", "bv", null, null);
+        UserPostDto userPostDto = new UserPostDto("VISITOR", "jadey", "123", "bv", null, null, null);
 
         roleRepos.save(role);
 
@@ -94,13 +94,13 @@ class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return User")
     void shouldReturnUser() {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
-        User user = new User("jadey", "123", "bv",null, null, null , null, null, null);
-        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null, null, null , null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, null, null, null, null);
+        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null, null, null, null, null, null, null);
 
         Mockito.when(currentUser.authenticateUser()).thenReturn(user);
         Mockito.when(mapper.mapUser(user)).thenReturn(userGetDto);
@@ -110,14 +110,14 @@ class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return User profile details only")
     void shouldReturnUserProfileDetailsOnly() {
 
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
-        User user = new User("jadey", "123", "bv",null , null, null,  null, null, null);
-        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null , null, null, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, null, null, null, null);
+        UserGetDto userGetDto = new UserGetDto("thomas", "ok bv", null, null, null, null, null, null, null);
 
         Mockito.when(currentUser.authenticateUser()).thenReturn(user);
         Mockito.when(mapper.mapUser(user)).thenReturn(userGetDto);
@@ -126,15 +126,15 @@ class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return Users Favorite Events")
     void shouldReturnUserFavoriteEvents() {
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
         UserFavoriteGetDto favoritesDto = new UserFavoriteGetDto();
-        User user = new User("jadey", "123", "bv",null , null, null, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, null, null, null, null);
         List<Object> favoriteEvents = new ArrayList<>();
-        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
+        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
         favoriteEvents.add(event);
         favoritesDto.setMyFavoriteEvents(favoriteEvents);
 
@@ -145,16 +145,16 @@ class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username="jadey", roles="VISITOR")
+    @WithMockUser(username = "jadey", roles = "VISITOR")
     @DisplayName("Should return User created events")
     void shouldReturnMyEvents() {
 
         UserService userService = new UserService(userRepos, mapper, roleRepos, encoder, eventRepos, currentUser, idChecker);
 
         UserMyEventGetDto myEventsDto = new UserMyEventGetDto();
-        User user = new User("jadey", "123", "bv",null , null, null, null, null, null);
+        User user = new User("jadey", "123", "bv", null, null, null, null, null, null, null);
         List<Object> myEventsEvents = new ArrayList<>();
-        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2,null,  null, null, null);
+        Event event = new Event(1L, null, "bv", "Kermis", "Nijmegen", "Burchtstraat 1", 50.0000, 5.0000, "5 euro", "gezellige kermis", DateConverter.parseDate("2022-12-31"), DateConverter.parseDate("2023-01-01"), 2, null, null, null, null);
         myEventsEvents.add(event);
         myEventsDto.setMyEvents(myEventsEvents);
 
